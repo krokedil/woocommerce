@@ -42,10 +42,14 @@ class CartLineShipping extends OrderLineData {
 		$this->set_sku();
 		$this->set_quantity();
 		$this->set_unit_price();
+		$this->set_subtotal_unit_price();
 		$this->set_tax_rate();
 		$this->set_total_amount();
+		$this->set_subtotal_amount();
 		$this->set_total_discount_amount();
+		$this->set_total_discount_tax_amount();
 		$this->set_total_tax_amount();
+		$this->set_subtotal_tax_amount();
 		$this->set_type();
 		$this->set_product_url();
 		$this->set_image_url();
@@ -85,6 +89,14 @@ class CartLineShipping extends OrderLineData {
 	}
 
 	/**
+	 * Abstract function to set product subtotal unit price
+	 * @return void
+	 */
+	public function set_subtotal_unit_price() {
+		$this->subtotal_unit_price = apply_filters( $this->get_filter_name( 'subtotal_unit_price' ), $this->format_price( $this->shipping_rate->get_cost() ), $this->shipping_rate );
+	}
+
+	/**
 	 * Abstract function to set product tax rate
 	 * @return void
 	 */
@@ -113,6 +125,14 @@ class CartLineShipping extends OrderLineData {
 	}
 
 	/**
+	 * Abstract function to set product subtotal amount
+	 * @return void
+	 */
+	public function set_subtotal_amount() {
+		$this->subtotal_amount = apply_filters( $this->get_filter_name( 'subtotal_amount' ), $this->format_price( $this->shipping_rate->get_cost() ), $this->shipping_rate );
+	}
+
+	/**
 	 * Abstract function to set product total discount amount
 	 * @return void
 	 */
@@ -121,11 +141,27 @@ class CartLineShipping extends OrderLineData {
     }
 
 	/**
+     * Abstract function to set product total discount tax amount
+     * @return void
+     */
+    public function set_total_discount_tax_amount() {
+		$this->total_discount_tax_amount = apply_filters( $this->get_filter_name( 'total_discount_tax_amount' ), 0, $this->shipping_rate );
+	}
+
+	/**
 	 * Abstract function to set product total tax amount
 	 * @return void
 	 */
 	public function set_total_tax_amount() {
         $this->total_tax_amount = apply_filters( $this->get_filter_name( 'total_tax_amount' ), $this->format_price( $this->shipping_rate->get_shipping_tax() ), $this->shipping_rate );
+	}
+
+	/**
+	 * Abstract function to set product subtotal tax amount
+	 * @return void
+	 */
+	public function set_subtotal_tax_amount() {
+		$this->subtotal_tax_amount = apply_filters( $this->get_filter_name( 'subtotal_tax_amount' ), $this->format_price( $this->shipping_rate->get_shipping_tax() ), $this->shipping_rate );
 	}
 
 	/**

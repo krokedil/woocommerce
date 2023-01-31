@@ -39,7 +39,15 @@ class OrderLineFee extends OrderLine {
 	 * @return void
 	 */
 	public function set_total_discount_amount() {
-        $this->total_discount_amount = apply_filters( $this->get_filter_name( 'total_discount_amount' ), $this->format_price( $this->order_line_item->get_total() ), $this->order_line_item );
+        $this->total_discount_amount = apply_filters( $this->get_filter_name( 'total_discount_amount' ), $this->format_price( 0 ), $this->order_line_item );
+	}
+
+	/**
+     * Abstract function to set product total discount tax amount
+     * @return void
+     */
+    public function set_total_discount_tax_amount() {
+		$this->total_discount_tax_amount = apply_filters( $this->get_filter_name( 'total_discount_amount' ), $this->format_price( 0 ), $this->order_line_item );
 	}
 
 	/**
