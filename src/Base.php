@@ -56,16 +56,20 @@ class Base {
 	 *
 	 * @param int|float|string $price The price to be formated .
 	 * @param string|null      $price_format The price format to be used, either minor or major as a string .
+	 *
+	 * @return int|float
 	 */
 	public function format_price( $price, $price_format = null ) {
 		$price_format   = $price_format ? $price_format : $this->price_format;
 		$decimal_points = $price_format === 'minor' ? 0 : 2;
 
 		if ( 'minor' === $price_format ) {
-			$price = $price * 100;
+			$price = floatval( $price ) * 100;
 		}
 
-		return wc_format_decimal( $price, $decimal_points );
+		$formated_price = wc_format_decimal( $price, $decimal_points );
+
+		return $price_format === 'minor' ? intval( $formated_price ) : floatval( $formated_price );
 	}
 
 	/**

@@ -53,10 +53,14 @@ class CartLineItem extends OrderLineData {
 		$this->set_sku();
 		$this->set_quantity();
 		$this->set_unit_price();
+		$this->set_subtotal_unit_price();
 		$this->set_tax_rate();
 		$this->set_total_amount();
+		$this->set_subtotal_amount();
 		$this->set_total_discount_amount();
+		$this->set_total_discount_tax_amount();
 		$this->set_total_tax_amount();
+		$this->set_subtotal_tax_amount();
 		$this->set_type();
 		$this->set_product_url();
 		$this->set_image_url();
@@ -103,9 +107,19 @@ class CartLineItem extends OrderLineData {
 	 * @return void
 	 */
 	public function set_unit_price() {
-		$unit_price = ( $this->cart_item['line_subtotal'] ) / $this->cart_item['quantity'];
+		$unit_price = ( $this->cart_item['line_total'] ) / $this->cart_item['quantity'];
 
 		$this->unit_price = apply_filters( $this->get_filter_name( 'unit_price' ), $this->format_price( $unit_price ), $this->cart_item );
+	}
+
+	/**
+	 * Function to set product subtotal unit price
+	 * @return void
+	 */
+	public function set_subtotal_unit_price() {
+		$subtotal_unit_price = ( $this->cart_item['line_subtotal'] ) / $this->cart_item['quantity'];
+
+		$this->subtotal_unit_price = apply_filters( $this->get_filter_name( 'subtotal_unit_price' ), $this->format_price( $subtotal_unit_price ), $this->cart_item );
 	}
 
 	/**
@@ -137,6 +151,14 @@ class CartLineItem extends OrderLineData {
 	}
 
 	/**
+	 * Function to set product subtotal amount
+	 * @return void
+	 */
+	public function set_subtotal_amount() {
+		$this->subtotal_amount = apply_filters( $this->get_filter_name( 'subtotal_amount' ), $this->format_price( $this->cart_item['line_subtotal'] ), $this->cart_item );
+	}
+
+	/**
 	 * Function to set product total discount amount
 	 * @return void
 	 */
@@ -147,11 +169,29 @@ class CartLineItem extends OrderLineData {
 	}
 
 	/**
+     * Abstract function to set product total discount tax amount
+     * @return void
+     */
+    public function set_total_discount_tax_amount() {
+		$total_discount_tax_amount = $this->cart_item['line_subtotal_tax'] - $this->cart_item['line_tax'];
+
+		$this->total_discount_tax_amount = apply_filters( $this->get_filter_name( 'total_discount_tax_amount' ), $this->format_price( $total_discount_tax_amount ), $this->cart_item );
+	}
+
+	/**
 	 * Function to set product total tax amount
 	 * @return void
 	 */
 	public function set_total_tax_amount() {
 		$this->total_tax_amount = apply_filters( $this->get_filter_name( 'total_tax_amount' ), $this->format_price( $this->cart_item['line_tax'] ), $this->cart_item );
+	}
+
+	/**
+	 * Function to set product subtotal tax amount
+	 * @return void
+	 */
+	public function set_subtotal_tax_amount() {
+		$this->subtotal_tax_amount = apply_filters( $this->get_filter_name( 'subtotal_tax_amount' ), $this->format_price( $this->cart_item['line_subtotal_tax'] ), $this->cart_item );
 	}
 
 	/**

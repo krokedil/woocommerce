@@ -37,6 +37,12 @@ abstract class OrderLineData extends Base {
 	 */
 	public $unit_price;
 
+    /**
+     * The price of a single unit of the item, excluding tax, before any discounts are applied.
+     * @var float|int
+     */
+    public $subtotal_unit_price;
+
 	/**
 	 * The tax rate applied to the item.
 	 * @var float|int
@@ -49,17 +55,36 @@ abstract class OrderLineData extends Base {
 	 */
 	public $total_amount;
 
+    /**
+     * The total cost of the line, excluding tax, before any discounts are applied.
+     * @var float|int
+     */
+    public $subtotal_amount;
+
 	/**
 	 * The total amount of discounts applied to the line.
 	 * @var float|int
 	 */
 	public $total_discount_amount;
 
+    /**
+     * The total amount of discounted tax to the line.
+     *
+     * @var float|int
+     */
+	public $total_discount_tax_amount;
+
 	/**
 	 * The total amount of tax applied to the line.
 	 * @var float|int
 	 */
 	public $total_tax_amount;
+
+    /**
+     * The total tax of the line, excluding tax, before any discounts are applied.
+     * @var float|int
+     */
+    public $subtotal_tax_amount;
 
 	/**
 	 * The type of item.
@@ -110,6 +135,13 @@ abstract class OrderLineData extends Base {
     public abstract function set_unit_price();
 
     /**
+     * Abstract function to set product subtotal unit price. Unit price before any discounts are applied.
+     *
+     * @return void
+     */
+	public abstract function set_subtotal_unit_price();
+
+    /**
      * Abstract function to set product tax rate
      * @return void
      */
@@ -122,16 +154,36 @@ abstract class OrderLineData extends Base {
     public abstract function set_total_amount();
 
     /**
+     * Abstract function to set product subtotal amount, total amount before any discounts are applied.
+     *
+     * @return void
+     */
+    public abstract function set_subtotal_amount();
+
+    /**
      * Abstract function to set product total discount amount
      * @return void
      */
     public abstract function set_total_discount_amount();
 
     /**
+     * Abstract function to set product total discount tax amount
+     * @return void
+     */
+    public abstract function set_total_discount_tax_amount();
+
+    /**
      * Abstract function to set product total tax amount
      * @return void
      */
     public abstract function set_total_tax_amount();
+
+    /**
+     * Abstract function to set product subtotal tax amount, total tax amount before any discounts are applied.
+     *
+     * @return void
+     */
+    public abstract function set_subtotal_tax_amount();
 
     /**
      * Abstract function to set product type
@@ -189,12 +241,28 @@ abstract class OrderLineData extends Base {
         return $this->unit_price;
     }
 
+    /**
+     * Function to get product subtotal unit price
+     * @return float|int
+     */
+    public function get_subtotal_unit_price() {
+        return $this->subtotal_unit_price;
+    }
+
 	/**
 	 * Function to get product unit tax amount
 	 * @return float|int
 	 */
 	public function get_unit_tax_amount() {
 		return $this->total_tax_amount / $this->quantity;
+	}
+
+    /**
+	 * Function to get product unit tax amount
+	 * @return float|int
+	 */
+	public function get_subtotal_unit_tax_amount() {
+		return $this->subtotal_tax_amount / $this->quantity;
 	}
 
     /**
@@ -214,6 +282,14 @@ abstract class OrderLineData extends Base {
     }
 
     /**
+     * Function to get product subtotal amount
+     * @return float|int
+     */
+    public function get_subtotal_amount() {
+        return $this->subtotal_amount;
+    }
+
+    /**
      * Function to get product total discount amount
      * @return float|int
      */
@@ -222,11 +298,27 @@ abstract class OrderLineData extends Base {
     }
 
     /**
+     * Function to get product total discount tax amount
+     * @return float|int
+     */
+    public function get_total_discount_tax_amount() {
+        return $this->total_discount_tax_amount;
+    }
+
+    /**
      * Function to get product total tax amount
      * @return float|int
      */
     public function get_total_tax_amount() {
         return $this->total_tax_amount;
+    }
+
+    /**
+     * Function to get product subtotal tax amount
+     * @return float|int
+     */
+    public function get_subtotal_tax_amount() {
+        return $this->subtotal_tax_amount;
     }
 
     /**

@@ -36,6 +36,15 @@ class OrderLineItem extends OrderLine {
 	}
 
 	/**
+	 * Abstract function to set product subtotal unit price. Unit price before any discounts are applied.
+	 *
+	 * @return void
+	 */
+	public function set_subtotal_unit_price() {
+		$this->subtotal_unit_price = apply_filters( $this->get_filter_name( 'subtotal_unit_price' ), $this->format_price( $this->order_line_item->get_subtotal() / $this->order_line_item->get_quantity() ), $this->order_line_item );
+	}
+
+	/**
 	 * Abstract function to set product sku
 	 * @return void
 	 */
@@ -48,7 +57,33 @@ class OrderLineItem extends OrderLine {
 	 * @return void
 	 */
 	public function set_total_discount_amount() {
-        $this->total_discount_amount = apply_filters( $this->get_filter_name( 'total_discount_amount' ), $this->format_price( $this->order_line_item->get_total() - $this->order_line_item->get_subtotal() ), $this->order_line_item );
+        $this->total_discount_amount = apply_filters( $this->get_filter_name( 'total_discount_amount' ), $this->format_price( $this->order_line_item->get_subtotal() - $this->order_line_item->get_total() ), $this->order_line_item );
+	}
+
+	/**
+     * Abstract function to set product total discount tax amount
+     * @return void
+     */
+    public function set_total_discount_tax_amount() {
+		$this->total_discount_tax_amount = apply_filters( $this->get_filter_name( 'total_discount_amount' ), $this->format_price( $this->order_line_item->get_subtotal_tax() - $this->order_line_item->get_total_tax() ), $this->order_line_item );
+	}
+
+	/**
+	 * Abstract function to set product subtotal amount. Total amount before any discounts are applied.
+	 *
+	 * @return void
+	 */
+	public function set_subtotal_amount() {
+		$this->subtotal_amount = apply_filters( $this->get_filter_name( 'subtotal_amount' ), $this->format_price( $this->order_line_item->get_subtotal() ), $this->order_line_item );
+	}
+
+	/**
+	 * Abstract function to set product subtotal tax amount. Total tax amount before any discounts are applied.
+	 *
+	 * @return void
+	 */
+	public function set_subtotal_tax_amount() {
+		$this->subtotal_tax_amount = apply_filters( $this->get_filter_name( 'subtotal_tax_amount' ), $this->format_price( $this->order_line_item->get_subtotal_tax() ), $this->order_line_item );
 	}
 
 	/**

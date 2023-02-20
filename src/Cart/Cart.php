@@ -69,7 +69,7 @@ class Cart extends OrderData {
 	 */
 	public function set_line_shipping() {
 		if ( $this->cart->needs_shipping() ) {
-			$shipping_ids   = array_unique( WC()->session->get('chosen_shipping_methods') );
+			$shipping_ids   = array_unique( WC()->session->get( 'chosen_shipping_methods' ) );
 			$shipping_rates = WC()->shipping->get_packages()[0]['rates'] ?? array();
 			foreach ( $shipping_ids as $shipping_id ) {
 				if ( $shipping_rates[ $shipping_id ] ?? false ) {
@@ -87,10 +87,50 @@ class Cart extends OrderData {
 	 * @return void
 	 */
 	public function set_line_coupons() {
-		$test = 'test';
-		if ( $test === 'test' )
-			return;
-		// TODO - Add coupon lines handling.
+		// Smart coupons.
+		foreach ( WC()->cart->get_coupons() as $coupon_key => $coupon ) {
+			if ( 'smart_coupon' !== $coupon->get_discount_type() && 'store_credit' !== $coupon->get_discount_type() ) {
+				continue;
+			}
+
+			$coupon_line = new CartLineCoupon( $this->config );
+			$coupon_line->set_smart_coupon_data( $coupon_key );
+
+			$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $coupon_key );
+		}
+
+		// WC Giftcards.
+		if ( class_exists( 'WC_GC_Gift_Cards' ) ) {
+			foreach ( WC_GC()->cart->get_applied_gift_cards()['giftcards'] as $wc_gc_gift_card_data ) {
+				$coupon_line = new CartLineCoupon( $this->config );
+				$coupon_line->set_wc_gc_data( $wc_gc_gift_card_data );
+
+				$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $wc_gc_gift_card_data );
+			}
+		}
+
+		// YITY Giftcards.
+		if ( class_exists( 'YITH_YWGC_Gift_Cards' ) ) {
+			if ( isset( WC()->cart->applied_gift_cards ) ) {
+				foreach ( WC()->cart->applied_gift_cards as $gift_card_code ) {
+					$coupon_line = new CartLineCoupon( $this->config );
+					$coupon_line->set_yith_wc_gc_data( $gift_card_code );
+
+					$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $yith_gift_card );
+				}
+			}
+		}
+
+		// PW Giftcards
+		if ( isset( WC()->session ) && ! empty( WC()->session->get( 'pw-gift-card-data' ) ) ) {
+			$pw_gift_card_data = WC()->session->get( 'pw-gift-card-data' );
+			foreach ( $pw_gift_card_data['gift_cards'] as $code => $value ) {
+				$coupon_line = new CartLineCoupon( $this->config );
+				$coupon_line->set_pw_giftcards_data( $code, $value );
+
+				$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $code, $value );
+			}
+		}
 	}
 
 	/**

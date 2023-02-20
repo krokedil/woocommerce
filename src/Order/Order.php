@@ -54,10 +54,10 @@ class Order extends OrderData {
 	 * @return void
 	 */
 	public function set_line_items() {
-        foreach ( $this->order->get_items() as $order_item ) {
-            $order_item          = new OrderLineItem( $order_item, $this->config );
-            $this->line_items[] = apply_filters( $this->get_filter_name( 'line_items' ), $order_item, $this->order );
-        }
+		foreach ( $this->order->get_items() as $order_item ) {
+			$order_item         = new OrderLineItem( $order_item, $this->config );
+			$this->line_items[] = apply_filters( $this->get_filter_name( 'line_items' ), $order_item, $this->order );
+		}
 	}
 
 	/**
@@ -65,18 +65,64 @@ class Order extends OrderData {
 	 * @return void
 	 */
 	public function set_line_shipping() {
-        foreach ( $this->order->get_items( 'shipping' ) as $shipping_item ) {
-            $shipping_method          = new OrderLineShipping( $shipping_item, $this->config );
-            $this->line_shipping[] = apply_filters( $this->get_filter_name( 'line_shipping' ), $shipping_method, $this->order );
-        }
+		foreach ( $this->order->get_items( 'shipping' ) as $shipping_item ) {
+			$shipping_method       = new OrderLineShipping( $shipping_item, $this->config );
+			$this->line_shipping[] = apply_filters( $this->get_filter_name( 'line_shipping' ), $shipping_method, $this->order );
+		}
 	}
 
 	/**
 	 * Sets the coupon lines.
+	 *
 	 * @return void
 	 */
 	public function set_line_coupons() {
-        // TODO - Coupons
+		// Smart coupons.
+		foreach ( $this->order->get_items( 'coupon' ) as $coupon ) {
+			$discount_type = $coupon->get_meta( 'coupon_data' )['discount_type'];
+
+			if ( 'smart_coupon' === $discount_type || 'store_credit' === $discount_type ) {
+
+				$coupon_line = new OrderLineCoupon( $this->config );
+				$coupon_line->set_smart_coupon_data( $coupon );
+				$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $coupon_key );
+				continue;
+			}
+
+		}
+
+		// WC Giftcards.
+		if ( class_exists( 'WC_GC_Gift_Cards' ) ) {
+			foreach ($this->order->get_items( 'gift_card' ) as $wc_gc_gift_card_data ) {
+				$coupon_line = new OrderLineCoupon( $this->config );
+				$coupon_line->set_wc_gc_data( $wc_gc_gift_card_data );
+
+				$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $wc_gc_gift_card_data );
+			}
+		}
+
+		// YITY Giftcards.
+		if ( class_exists( 'YITH_YWGC_Gift_Cards' ) ) {
+			if ( isset( WC()->cart->applied_gift_cards ) ) {
+				foreach ( WC()->cart->applied_gift_cards as $gift_card_code ) {
+					$coupon_line = new OrderLineCoupon( $this->config );
+					$coupon_line->set_yith_wc_gc_data( $gift_card_code );
+
+					$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $yith_gift_card );
+				}
+			}
+		}
+
+		// PW Giftcards
+		if ( isset( WC()->session ) && ! empty( WC()->session->get( 'pw-gift-card-data' ) ) ) {
+			$pw_gift_card_data = WC()->session->get( 'pw-gift-card-data' );
+			foreach ( $pw_gift_card_data['gift_cards'] as $code => $value ) {
+				$coupon_line = new OrderLineCoupon( $this->config );
+				$coupon_line->set_pw_giftcards_data( $code, $value );
+
+				$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $code, $value );
+			}
+		}
 	}
 
 	/**
@@ -84,10 +130,10 @@ class Order extends OrderData {
 	 * @return void
 	 */
 	public function set_line_fees() {
-        foreach ( $this->order->get_items( 'fee' ) as $fee_item ) {
-            $fee_item          = new OrderLineFee( $fee_item, $this->config );
-            $this->line_fees[] = apply_filters( $this->get_filter_name( 'line_fees' ), $fee_item, $this->order );
-        }
+		foreach ( $this->order->get_items( 'fee' ) as $fee_item ) {
+			$fee_item          = new OrderLineFee( $fee_item, $this->config );
+			$this->line_fees[] = apply_filters( $this->get_filter_name( 'line_fees' ), $fee_item, $this->order );
+		}
 	}
 
 	/**
@@ -95,7 +141,7 @@ class Order extends OrderData {
 	 * @return void
 	 */
 	public function set_line_compatibility() {
-        // TODO - Compatibility
+		// TODO - Compatibility
 	}
 
 	/**
@@ -103,7 +149,7 @@ class Order extends OrderData {
 	 * @return void
 	 */
 	public function set_customer() {
-        $this->customer = apply_filters( $this->get_filter_name( 'customer' ), new OrderCustomer( $this->order, $this->config ), $this->order );
+		$this->customer = apply_filters( $this->get_filter_name( 'customer' ), new OrderCustomer( $this->order, $this->config ), $this->order );
 	}
 
 	/**
@@ -111,7 +157,7 @@ class Order extends OrderData {
 	 * @return void
 	 */
 	public function set_total() {
-        $this->total = apply_filters( $this->get_filter_name( 'total' ), $this->format_price( $this->order->get_total() ), $this->order );
+		$this->total = apply_filters( $this->get_filter_name( 'total' ), $this->format_price( $this->order->get_total() ), $this->order );
 	}
 
 	/**
@@ -119,7 +165,7 @@ class Order extends OrderData {
 	 * @return void
 	 */
 	public function set_total_tax() {
-        $this->total_tax = apply_filters( $this->get_filter_name( 'total_tax' ), $this->format_price( $this->order->get_total_tax() ), $this->order );
+		$this->total_tax = apply_filters( $this->get_filter_name( 'total_tax' ), $this->format_price( $this->order->get_total_tax() ), $this->order );
 	}
 
 	/**
@@ -127,7 +173,7 @@ class Order extends OrderData {
 	 * @return void
 	 */
 	public function set_subtotal() {
-        $this->subtotal = apply_filters( $this->get_filter_name( 'subtotal' ), $this->format_price( $this->order->get_subtotal() ), $this->order );
+		$this->subtotal = apply_filters( $this->get_filter_name( 'subtotal' ), $this->format_price( $this->order->get_subtotal() ), $this->order );
 	}
 
 	/**
@@ -135,7 +181,7 @@ class Order extends OrderData {
 	 * @return void
 	 */
 	public function set_subtotal_tax() {
-        // TODO - Subtotal tax
-        //$this->subtotal_tax = $this->format_price( $this->order->get_subtotal_tax() );
+		// TODO - Subtotal tax
+		//$this->subtotal_tax = $this->format_price( $this->order->get_subtotal_tax() );
 	}
 }
