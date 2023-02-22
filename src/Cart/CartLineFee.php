@@ -35,6 +35,8 @@ class CartLineFee extends OrderLineData {
 	public function __construct( $cart_fee, $config = array() ) {
 		parent::__construct( $config );
 
+		$this->cart_fee = $cart_fee;
+
 		$this->set_name();
 		$this->set_sku();
 		$this->set_quantity();
