@@ -68,8 +68,14 @@ class Cart extends OrderData {
 	 * @return void
 	 */
 	public function set_line_shipping() {
-		if ( $this->cart->needs_shipping() ) {
-			$shipping_ids   = array_unique( WC()->session->get( 'chosen_shipping_methods' ) );
+		if ( $this->cart->needs_shipping() && $this->cart->show_shipping() ) {
+			$chosen_shipping_methods = WC()->session->get( 'chosen_shipping_methods' );
+
+			if ( empty( $chosen_shipping_methods ) ) {
+				return;
+			}
+
+			$shipping_ids   = array_unique( $chosen_shipping_methods );
 			$shipping_rates = WC()->shipping->get_packages()[0]['rates'] ?? array();
 			foreach ( $shipping_ids as $shipping_id ) {
 				if ( $shipping_rates[ $shipping_id ] ?? false ) {
