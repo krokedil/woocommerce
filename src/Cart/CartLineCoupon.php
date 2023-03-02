@@ -32,12 +32,11 @@ class CartLineCoupon extends OrderLineData {
 	 * @return void
 	 */
 	public function set_smart_coupon_data( $coupon_key ) {
-		$coupon = WC()->cart->get_coupons()[ $coupon_key ];
-		$coupon_amount     = $coupon->get_amount() * -1;
+		$coupon_amount     = WC()->cart->get_coupon_discount_amount( $coupon_key ) * -1;
 		$coupon_tax_amount = 0;
 		$coupon_name       = 'Discount';
 
-		$this->name                = "$coupon_name $code";
+		$this->name                = "$coupon_name $coupon_key";
 		$this->reference           = substr( strval( $coupon_reference ), 0, 64 );
 		$this->quantity            = 1;
 		$this->unit_price          = $this->format_price( $coupon_amount );
