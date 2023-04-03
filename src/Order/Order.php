@@ -23,14 +23,14 @@ class Order extends OrderData {
 	/**
 	 * The WooCommerce order.
 	 *
-	 * @var \WC_Order $cart
+	 * @var \WC_Order|\WC_Order_Refund $order
 	 */
 	public $order;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param \WC_Order $order The WooCommerce order.
+	 * @param \WC_Order|\WC_Order_Refund $order The WooCommerce order.
 	 * @param array    $config Configuration array.
 	 */
 	public function __construct( $order, $config = array() ) {
@@ -43,11 +43,14 @@ class Order extends OrderData {
 		$this->set_line_fees();
 		$this->set_line_coupons();
 		$this->set_line_compatibility();
-		$this->set_customer();
 		$this->set_total();
 		$this->set_total_tax();
 		$this->set_subtotal();
 		$this->set_subtotal_tax();
+
+		if ( $order instanceof \WC_Order ) {
+			$this->set_customer();
+		}
 	}
 	/**
 	 * Sets the line items.
