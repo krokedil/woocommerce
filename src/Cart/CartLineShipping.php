@@ -69,15 +69,7 @@ class CartLineShipping extends OrderLineData {
 	 * @return void
 	 */
 	public function set_sku() {
-		$method_id   = $this->order_line_item->get_method_id();
-		$instance_id = $this->order_line_item->get_instance_id();
-
-		// If we have an instance id and it does not exist in the method id, add it.
-		if ( $instance_id && false === strpos( $method_id, ':' ) ) {
-			$method_id .= ':' . $instance_id;
-		}
-
-		$this->sku = apply_filters( $this->get_filter_name( 'sku' ), $method_id, $this->order_line_item );
+        $this->sku = apply_filters( $this->get_filter_name( 'sku' ), $this->shipping_rate->get_id(), $this->shipping_rate );
 	}
 
 	/**
