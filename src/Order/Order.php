@@ -61,6 +61,8 @@ class Order extends OrderData {
 			$order_item         = new OrderLineItem( $order_item, $this->config );
 			$this->line_items[] = apply_filters( $this->get_filter_name( 'line_items' ), $order_item, $this->order );
 		}
+
+		$this->line_items = apply_filters( $this->get_filter_name( __FUNCTION__ ), $this->line_items, $this->order );
 	}
 
 	/**
@@ -72,6 +74,8 @@ class Order extends OrderData {
 			$shipping_method       = new OrderLineShipping( $shipping_item, $this->config );
 			$this->line_shipping[] = apply_filters( $this->get_filter_name( 'line_shipping' ), $shipping_method, $this->order );
 		}
+
+		$this->line_shipping = apply_filters( $this->get_filter_name( __FUNCTION__ ), $this->line_shipping, $this->order );
 	}
 
 	/**
@@ -126,6 +130,8 @@ class Order extends OrderData {
 				$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $code, $value );
 			}
 		}
+
+		$this->line_coupons = apply_filters( $this->get_filter_name( __FUNCTION__ ), $this->line_coupons, $this->order );
 	}
 
 	/**
@@ -137,6 +143,8 @@ class Order extends OrderData {
 			$fee_item          = new OrderLineFee( $fee_item, $this->config );
 			$this->line_fees[] = apply_filters( $this->get_filter_name( 'line_fees' ), $fee_item, $this->order );
 		}
+
+		$this->line_fees = apply_filters( $this->get_filter_name( __FUNCTION__ ), $this->line_fees, $this->order );
 	}
 
 	/**
