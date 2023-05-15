@@ -60,6 +60,8 @@ class Cart extends OrderData {
 			$cart_item          = new CartLineItem( $cart_item, $this->config );
 			$this->line_items[] = apply_filters( $this->get_filter_name( 'line_items' ), $cart_item, $this->cart );
 		}
+
+		$this->line_items = apply_filters( $this->get_filter_name( __FUNCTION__ ), $this->line_items, $this->cart );
 	}
 
 	/**
@@ -85,6 +87,8 @@ class Cart extends OrderData {
 				}
 			}
 		}
+
+		$this->line_shipping = apply_filters( $this->get_filter_name( __FUNCTION__ ), $this->line_shipping, $this->cart );
 	}
 
 	/**
@@ -122,7 +126,7 @@ class Cart extends OrderData {
 					$coupon_line = new CartLineCoupon( $this->config );
 					$coupon_line->set_yith_wc_gc_data( $gift_card_code );
 
-					$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $yith_gift_card );
+					$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $gift_card_code );
 				}
 			}
 		}
@@ -137,6 +141,8 @@ class Cart extends OrderData {
 				$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $code, $value );
 			}
 		}
+
+		$this->line_coupons = apply_filters( $this->get_filter_name( __FUNCTION__ ), $this->line_coupons, $this->cart );
 	}
 
 	/**
@@ -149,6 +155,8 @@ class Cart extends OrderData {
 			$fee_line          = new CartLineFee( $cart_fee, $this->config );
 			$this->line_fees[] = apply_filters( $this->get_filter_name( 'line_fees' ), $fee_line, $this->cart );
 		}
+
+		$this->line_fees = apply_filters( $this->get_filter_name( __FUNCTION__ ), $this->line_fees, $this->cart );
 	}
 
 	/**

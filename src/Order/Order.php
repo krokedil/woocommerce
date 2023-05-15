@@ -23,14 +23,14 @@ class Order extends OrderData {
 	/**
 	 * The WooCommerce order.
 	 *
-	 * @var \WC_Order $cart
+	 * @var \WC_Order|\WC_Order_Refund $order
 	 */
 	public $order;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param \WC_Order $order The WooCommerce order.
+	 * @param \WC_Order|\WC_Order_Refund $order The WooCommerce order.
 	 * @param array    $config Configuration array.
 	 */
 	public function __construct( $order, $config = array() ) {
@@ -43,11 +43,14 @@ class Order extends OrderData {
 		$this->set_line_fees();
 		$this->set_line_coupons();
 		$this->set_line_compatibility();
-		$this->set_customer();
 		$this->set_total();
 		$this->set_total_tax();
 		$this->set_subtotal();
 		$this->set_subtotal_tax();
+
+		if ( $order instanceof \WC_Order ) {
+			$this->set_customer();
+		}
 	}
 	/**
 	 * Sets the line items.
@@ -58,6 +61,8 @@ class Order extends OrderData {
 			$order_item         = new OrderLineItem( $order_item, $this->config );
 			$this->line_items[] = apply_filters( $this->get_filter_name( 'line_items' ), $order_item, $this->order );
 		}
+
+		$this->line_items = apply_filters( $this->get_filter_name( __FUNCTION__ ), $this->line_items, $this->order );
 	}
 
 	/**
@@ -69,6 +74,8 @@ class Order extends OrderData {
 			$shipping_method       = new OrderLineShipping( $shipping_item, $this->config );
 			$this->line_shipping[] = apply_filters( $this->get_filter_name( 'line_shipping' ), $shipping_method, $this->order );
 		}
+
+		$this->line_shipping = apply_filters( $this->get_filter_name( __FUNCTION__ ), $this->line_shipping, $this->order );
 	}
 
 	/**
@@ -123,6 +130,8 @@ class Order extends OrderData {
 				$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $code, $value );
 			}
 		}
+
+		$this->line_coupons = apply_filters( $this->get_filter_name( __FUNCTION__ ), $this->line_coupons, $this->order );
 	}
 
 	/**
@@ -134,6 +143,8 @@ class Order extends OrderData {
 			$fee_item          = new OrderLineFee( $fee_item, $this->config );
 			$this->line_fees[] = apply_filters( $this->get_filter_name( 'line_fees' ), $fee_item, $this->order );
 		}
+
+		$this->line_fees = apply_filters( $this->get_filter_name( __FUNCTION__ ), $this->line_fees, $this->order );
 	}
 
 	/**

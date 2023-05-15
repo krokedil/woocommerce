@@ -19,7 +19,7 @@ class OrderLineShipping extends OrderLine {
     /**
      * Constructor.
      *
-     * @param \WC_Order_Item_Fee $order_line_item The order line item.
+     * @param \WC_Order_Item_Shipping $order_line_item The order line item.
      * @param array $config Configuration array.
      */
 	public function __construct( $order_line_item, $config = array() ) {
@@ -31,7 +31,15 @@ class OrderLineShipping extends OrderLine {
 	 * @return void
 	 */
 	public function set_sku() {
-		$this->sku = apply_filters( $this->get_filter_name( 'sku' ), $this->order_line_item->get_method_id(), $this->order_line_item );
+		$method_id   = $this->order_line_item->get_method_id();
+		$instance_id = $this->order_line_item->get_instance_id();
+
+		// If we have an instance id and it does not exist in the method id, add it.
+		if ( $instance_id && false === strpos( $method_id, ':' ) ) {
+			$method_id .= ':' . $instance_id;
+		}
+
+		$this->sku = apply_filters( $this->get_filter_name( 'sku' ), $method_id, $this->order_line_item );
 	}
 
 	/**
