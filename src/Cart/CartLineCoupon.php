@@ -37,7 +37,7 @@ class CartLineCoupon extends OrderLineData {
 		$coupon_name       = 'Discount';
 
 		$this->name                = "$coupon_name $coupon_key";
-		$this->reference           = substr( strval( $coupon_reference ), 0, 64 );
+		$this->reference           = substr( strval( $coupon_key ), 0, 64 );
 		$this->quantity            = 1;
 		$this->unit_price          = $this->format_price( $coupon_amount );
 		$this->subtotal_unit_price = $this->format_price( $coupon_amount );
@@ -79,8 +79,8 @@ class CartLineCoupon extends OrderLineData {
 	 * @return void
 	 */
 	public function set_yith_wc_gc_data( $code ) {
-		$coupon_amount     = isset( WC()->cart->applied_gift_cards_amounts[ $gift_card_code ] ) ?
-							        WC()->cart->applied_gift_cards_amounts[ $gift_card_code ] : 0 * -1;
+		$coupon_amount     = isset( WC()->cart->applied_gift_cards_amounts[ $code ] ) ?
+			WC()->cart->applied_gift_cards_amounts[ $code ] : 0 * -1;
 		$coupon_tax_amount = 0;
 		$coupon_name       = 'Gift card';
 
