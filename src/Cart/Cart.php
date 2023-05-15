@@ -126,7 +126,7 @@ class Cart extends OrderData {
 					$coupon_line = new CartLineCoupon( $this->config );
 					$coupon_line->set_yith_wc_gc_data( $gift_card_code );
 
-					$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $yith_gift_card );
+					$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $gift_card_code );
 				}
 			}
 		}
