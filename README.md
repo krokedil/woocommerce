@@ -7,20 +7,21 @@ A library package for Krokedils plugins that contains helper methods when workin
 
 ### Installation
 
-Require this package as a development dependency with [Composer](https://getcomposer.org).
-
-For now this repo is private, so you need to add the following to your composer.json file:
+To require this package, you need to require it in your composer.json file and also add the repository to the repositories array.
 
 ```json
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "git@github.com:krokedil/woocommerce.git"
-    }
-  ],
+{
+    "require": {
+        "krokedil/woocommerce": "^1.0"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:krokedil/woocommerce.git"
+        }
+    ]
+}
 ```
-
-This also requires you to have a valid SSH key added to your GitHub account, and that you have access to the repository. You can read more about this in the [Composer documentation](https://getcomposer.org/doc/05-repositories.md#using-private-repositories).
 
 ### Usage
 
