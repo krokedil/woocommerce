@@ -29,7 +29,7 @@ class OrderLineCoupon extends OrderLineData {
 		$coupon_name       = 'Discount';
 
 		$this->name                = "$coupon_name $code";
-		$this->reference           = substr( strval( $code ), 0, 64 );
+		$this->sku                 = substr( strval( $code ), 0, 64 );
 		$this->quantity            = 1;
 		$this->unit_price          = $this->format_price( $coupon_amount );
 		$this->subtotal_unit_price = $this->format_price( $coupon_amount );
@@ -53,7 +53,7 @@ class OrderLineCoupon extends OrderLineData {
 		$coupon_name        = 'Gift card';
 
 		$this->name                = "$coupon_name $code";
-		$this->reference           = 'gift_card';
+		$this->sku                 = 'gift_card';
 		$this->quantity            = 1;
 		$this->unit_price          = $this->format_price( $coupon_amount );
 		$this->subtotal_unit_price = $this->format_price( $coupon_amount );
@@ -77,7 +77,7 @@ class OrderLineCoupon extends OrderLineData {
 		$coupon_name        = 'Gift card';
 
 		$this->name                = "$coupon_name $code";
-		$this->reference           = 'gift_card';
+		$this->sku                 = 'gift_card';
 		$this->quantity            = 1;
 		$this->unit_price          = $this->format_price( $coupon_amount );
 		$this->subtotal_unit_price = $this->format_price( $coupon_amount );
@@ -101,7 +101,7 @@ class OrderLineCoupon extends OrderLineData {
 		$coupon_name        = 'Gift card';
 
 		$this->name                = "$coupon_name $code";
-		$this->reference           = 'gift_card';
+		$this->sku                 = 'gift_card';
 		$this->quantity            = 1;
 		$this->unit_price          = $this->format_price( $coupon_amount );
 		$this->subtotal_unit_price = $this->format_price( $coupon_amount );
