@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - TBD
+
+### Fixed
+* Fixed some issues with bad references for coupon keys.
+
+### Changed
+* Fixed not returning the full shipping reference with instnace id for order shipping lines.
+
+### Added
+* Added filters for the full order line and cart line data when we are setting them in our Data classes. For example cart line items can now be filtered using the `cart_set_line_items` filter. Thank you [@fitimvata](https://github.com/fitimvata)!
+
 ------------------
 
 ## [1.0.3] - 2023-03-02
