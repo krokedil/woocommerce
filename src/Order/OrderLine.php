@@ -90,7 +90,7 @@ abstract class OrderLine extends OrderLineData {
 		$taxes    = $this->order_line_item->get_taxes();
 		if ( ! empty( $taxes['total'] ) ) {
 			foreach ( $taxes['total'] as $tax_id => $tax_amount ) {
-				if ( $tax_amount > 0 ) {
+				if ( ! empty( $tax_amount ) ) {
 					$tax_rate = \WC_Tax::get_rate_percent_value( $tax_id ) * 100;
 					break;
 				}
