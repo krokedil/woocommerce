@@ -99,13 +99,17 @@ class Cart extends OrderData {
 	public function set_line_coupons() {
 		// Smart coupons.
 		foreach ( WC()->cart->get_coupons() as $coupon_key => $coupon ) {
-			if ( 'smart_coupon' !== $coupon->get_discount_type() && 'store_credit' !== $coupon->get_discount_type() ) {
+			if ( 'smart_coupon' === $coupon->get_discount_type() || 'store_credit' === $coupon->get_discount_type() ) {
+				$coupon_line = new CartLineCoupon( $this->config );
+				$coupon_line->set_smart_coupon_data( $coupon_key );
+
+				$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $coupon_key );
 				continue;
 			}
 
+			// Handle normal WooCommerce coupons.
 			$coupon_line = new CartLineCoupon( $this->config );
-			$coupon_line->set_smart_coupon_data( $coupon_key );
-
+			$coupon_line->set_coupon_data( $coupon_key, $coupon );
 			$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $coupon_key );
 		}
 
