@@ -89,18 +89,20 @@ class Order extends OrderData {
 			$discount_type = $coupon->get_meta( 'coupon_data' )['discount_type'];
 
 			if ( 'smart_coupon' === $discount_type || 'store_credit' === $discount_type ) {
-
 				$coupon_line = new OrderLineCoupon( $this->config );
 				$coupon_line->set_smart_coupon_data( $coupon );
-				$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $coupon_key );
+				$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $coupon );
 				continue;
 			}
 
+			$coupon_line = new OrderLineCoupon( $this->config );
+			$coupon_line->set_coupon_data( $coupon );
+			$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $coupon );
 		}
 
 		// WC Giftcards.
 		if ( class_exists( 'WC_GC_Gift_Cards' ) ) {
-			foreach ($this->order->get_items( 'gift_card' ) as $wc_gc_gift_card_data ) {
+			foreach ( $this->order->get_items( 'gift_card' ) as $wc_gc_gift_card_data ) {
 				$coupon_line = new OrderLineCoupon( $this->config );
 				$coupon_line->set_wc_gc_data( $wc_gc_gift_card_data );
 
@@ -115,7 +117,7 @@ class Order extends OrderData {
 					$coupon_line = new OrderLineCoupon( $this->config );
 					$coupon_line->set_yith_wc_gc_data( $gift_card_code );
 
-					$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $yith_gift_card );
+					$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $gift_card_code );
 				}
 			}
 		}
