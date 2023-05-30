@@ -106,8 +106,8 @@ class StoreApiLineShipping extends OrderLineData {
 		$tax_total = $this->shipping_rate['taxes'];
 		$total     = $this->shipping_rate['price'];
 
-		// If the tax total is not zero, calculate the tax rate.
-		if ( 0 !== $tax_total ) {
+		// If the tax total or total is 0, we don't want to divide by 0.
+		if ( ! empty( $tax_total ) ) {
 			$item_tax_rate = ( $tax_total / $total ) * 10000;
 		}
 

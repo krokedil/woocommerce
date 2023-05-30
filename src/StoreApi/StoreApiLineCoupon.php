@@ -53,8 +53,8 @@ class StoreApiLineCoupon extends OrderLineData {
 	 */
 	public function set_coupon_data( $coupon ) {
 		$this->coupon              = $coupon;
-		$this->discount_amount     = $this->format_price_from_minor( $coupon['total_discount'] );
-		$this->discount_tax_amount = $this->format_price_from_minor( $coupon['total_discount_tax'] );
+		$this->discount_amount     = $this->format_price_from_minor( $coupon['totals']['total_discount'] );
+		$this->discount_tax_amount = $this->format_price_from_minor( $coupon['totals']['total_discount_tax'] );
 
 		$this->set_name();
 		$this->set_sku();
