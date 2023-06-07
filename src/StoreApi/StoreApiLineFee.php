@@ -68,7 +68,7 @@ class StoreApiLineFee extends OrderLineData {
 	 * @return void
 	 */
 	public function set_sku() {
-		$item_reference = $this->cart_fee['id'];
+		$item_reference = $this->cart_fee['key'];
 
 		$this->sku = apply_filters( $this->get_filter_name( 'sku' ), $item_reference, $this->cart_fee );
 	}
