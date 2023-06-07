@@ -78,7 +78,7 @@ class StoreApiLineItem extends OrderLineData {
 	 * @return void
 	 */
 	public function set_sku() {
-		$item_reference = $this->cart_item['sku'];
+		$item_reference = $this->cart_item['sku'] ? $this->cart_item['sku'] : $this->cart_item['id'];
 
 		$this->sku = apply_filters( $this->get_filter_name( 'sku' ), $item_reference, $this->cart_item );
 	}
