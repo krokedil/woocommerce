@@ -7,14 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+------------------
+
+## [1.2.0] - 2023-06-19
+
 ### Added
 * Added support standard Coupons.
 * Added support for handling Store Api carts.
 
 ### Fixed
 * Fixed and issue with how we handled YITH Giftcards.
-
-------------------
 
 ## [1.1.0] - 2023-05-15
 
