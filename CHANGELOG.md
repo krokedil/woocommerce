@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changes
+* We now use the first package returned when getting packages from the cart instead of the one with the key 0. This should improve compatibility with other plugins that might use something other then a incrementing integer for the package key. For example WooCommerce Advanced Shipping Packages, which uses the post id of the package as the key.
+
 ------------------
 
 ## [1.2.0] - 2023-06-19

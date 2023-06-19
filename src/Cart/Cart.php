@@ -78,7 +78,12 @@ class Cart extends OrderData {
 			}
 
 			$shipping_ids   = array_unique( $chosen_shipping_methods );
-			$shipping_rates = WC()->shipping->get_packages()[0]['rates'] ?? array();
+			// Only use the first package in the cart.
+			$packages = WC()->shipping->get_packages() ?? array();
+			$package  = reset( $packages );
+
+			// Get the shipping rates for the package.
+			$shipping_rates = $package['rates'] ?? array();
 			foreach ( $shipping_ids as $shipping_id ) {
 				if ( $shipping_rates[ $shipping_id ] ?? false ) {
 					$shipping_rate         = $shipping_rates[ $shipping_id ];
