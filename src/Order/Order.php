@@ -111,11 +111,12 @@ class Order extends OrderData {
 		}
 
 		// YITY Giftcards.
-		if ( class_exists( 'YITH_YWGC_Gift_Cards' ) ) {
-			if ( isset( WC()->cart->applied_gift_cards ) ) {
-				foreach ( WC()->cart->applied_gift_cards as $gift_card_code ) {
+		if ( class_exists( 'YITH_YWGC_Gift_Card' ) ) {
+			$yith_meta = $this->order->get_meta( '_ywgc_applied_gift_cards', true );
+			if ( ! empty( $yith_meta ) ) {
+				foreach ( $yith_meta as $gift_card_code => $gift_card_amount ) {
 					$coupon_line = new OrderLineCoupon( $this->config );
-					$coupon_line->set_yith_wc_gc_data( $gift_card_code );
+					$coupon_line->set_yith_wc_gc_data( $gift_card_code, $gift_card_amount );
 
 					$this->line_coupons[] = apply_filters( $this->get_filter_name( 'line_coupons' ), $coupon_line, $gift_card_code );
 				}

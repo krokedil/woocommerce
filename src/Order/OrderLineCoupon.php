@@ -119,12 +119,12 @@ class OrderLineCoupon extends OrderLineData {
 	 * Set the data from the YITH WooCommerce Gift Cards plugin.
 	 *
 	 * @param string $code YITH Giftcard code.
+	 * @param string|int|float $amount YITH Giftcard amount.
 	 *
 	 * @return void
 	 */
-	public function set_yith_wc_gc_data( $code ) {
-		$coupon_amount     = isset( WC()->cart->applied_gift_cards_amounts[ $code ] ) ?
-			WC()->cart->applied_gift_cards_amounts[ $code ] : 0 * -1;
+	public function set_yith_wc_gc_data( $code, $amount ) {
+		$coupon_amount     = $amount * -1;
 		$coupon_tax_amount = 0;
 		$coupon_name       = 'Gift card';
 

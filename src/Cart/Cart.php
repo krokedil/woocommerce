@@ -124,7 +124,7 @@ class Cart extends OrderData {
 		}
 
 		// YITY Giftcards.
-		if ( class_exists( 'YITH_YWGC_Gift_Cards' ) ) {
+		if ( class_exists( 'YITH_YWGC_Gift_Card' ) ) {
 			if ( isset( WC()->cart->applied_gift_cards ) ) {
 				foreach ( WC()->cart->applied_gift_cards as $gift_card_code ) {
 					$coupon_line = new CartLineCoupon( $this->config );
