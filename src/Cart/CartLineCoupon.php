@@ -18,11 +18,63 @@ defined( 'ABSPATH' ) || exit;
 class CartLineCoupon extends OrderLineData {
 
 	/**
+	 * WooCommerce Coupon data.
+	 *
+	 * @var WC_Coupon
+	 */
+	public $coupon;
+
+	/**
+	 * Coupon amount.
+	 *
+	 * @var float|int
+	 */
+	public $discount_amount;
+
+	/**
+	 * Coupon amount.
+	 *
+	 * @var float|int
+	 */
+	public $discount_tax_amount;
+
+	/**
 	 * Filter prefix.
 	 *
 	 * @var mixed
 	 */
 	public $filter_prefix = 'cart_line_coupon';
+
+	/**
+	 * Set the data for a normal WooCommerce coupon.
+	 *
+	 * @param string    $coupon_key Coupon key.
+	 * @param WC_Coupon $coupon Coupon data.
+	 *
+	 * @return void
+	 */
+	public function set_coupon_data( $coupon_key, $coupon ) {
+		$this->coupon              = $coupon;
+		$this->discount_amount     = $this->format_price( WC()->cart->get_coupon_discount_amount( $coupon_key, true ) );
+		$this->discount_tax_amount = $this->format_price( WC()->cart->get_coupon_discount_tax_amount( $coupon_key, true ) );
+
+		$this->set_name();
+		$this->set_sku();
+		$this->set_quantity();
+		$this->set_unit_price();
+		$this->set_subtotal_unit_price();
+		$this->set_tax_rate();
+		$this->set_total_amount();
+		$this->set_subtotal_amount();
+		$this->set_total_discount_amount();
+		$this->set_total_discount_tax_amount();
+		$this->set_total_tax_amount();
+		$this->set_subtotal_tax_amount();
+		$this->set_type();
+		$this->set_product_url();
+		$this->set_image_url();
+		$this->set_compatability();
+	}
 
 	/**
 	 * Set coupon data from Smart coupons.
@@ -37,7 +89,7 @@ class CartLineCoupon extends OrderLineData {
 		$coupon_name       = 'Discount';
 
 		$this->name                = "$coupon_name $coupon_key";
-		$this->reference           = substr( strval( $coupon_key ), 0, 64 );
+		$this->sku                 = substr( strval( $coupon_key ), 0, 64 );
 		$this->quantity            = 1;
 		$this->unit_price          = $this->format_price( $coupon_amount );
 		$this->subtotal_unit_price = $this->format_price( $coupon_amount );
@@ -61,7 +113,7 @@ class CartLineCoupon extends OrderLineData {
 		$coupon_name       = 'Gift card';
 
 		$this->name                = "$coupon_name $code";
-		$this->reference           = 'gift_card';
+		$this->sku                 = 'gift_card';
 		$this->quantity            = 1;
 		$this->unit_price          = $this->format_price( $coupon_amount );
 		$this->subtotal_unit_price = $this->format_price( $coupon_amount );
@@ -85,7 +137,7 @@ class CartLineCoupon extends OrderLineData {
 		$coupon_name       = 'Gift card';
 
 		$this->name                = "$coupon_name $code";
-		$this->reference           = 'gift_card';
+		$this->sku                 = 'gift_card';
 		$this->quantity            = 1;
 		$this->unit_price          = $this->format_price( $coupon_amount );
 		$this->subtotal_unit_price = $this->format_price( $coupon_amount );
@@ -124,7 +176,7 @@ class CartLineCoupon extends OrderLineData {
 	 * @return void
 	 */
 	public function set_name() {
-		throw new NotImplementedException( 'set_name' );
+		$this->name = apply_filters( $this->get_filter_name( 'name' ), $this->coupon->get_code(), $this->coupon );
 	}
 
 	/**
@@ -132,7 +184,7 @@ class CartLineCoupon extends OrderLineData {
 	 * @return void
 	 */
 	public function set_sku() {
-		throw new NotImplementedException( 'set_sku' );
+		$this->sku = apply_filters( $this->get_filter_name( 'sku' ), $this->coupon->get_code(), $this->coupon );
 	}
 
 	/**
@@ -140,7 +192,7 @@ class CartLineCoupon extends OrderLineData {
 	 * @return void
 	 */
 	public function set_quantity() {
-		throw new NotImplementedException( 'set_quantity' );
+		$this->quantity = apply_filters( $this->get_filter_name( 'quantity' ), 1, $this->coupon );
 	}
 
 	/**
@@ -148,7 +200,7 @@ class CartLineCoupon extends OrderLineData {
 	 * @return void
 	 */
 	public function set_unit_price() {
-		throw new NotImplementedException( 'set_unit_price' );
+		$this->unit_price = apply_filters( $this->get_filter_name( 'unit_price' ), $this->discount_amount, $this->coupon );
 	}
 
 	/**
@@ -156,7 +208,7 @@ class CartLineCoupon extends OrderLineData {
 	 * @return void
 	 */
 	public function set_subtotal_unit_price() {
-		throw new NotImplementedException( 'set_subtotal_unit_price' );
+		$this->subtotal_unit_price = apply_filters( $this->get_filter_name( 'subtotal_unit_price' ), $this->discount_amount, $this->coupon );
 	}
 
 	/**
@@ -164,7 +216,7 @@ class CartLineCoupon extends OrderLineData {
 	 * @return void
 	 */
 	public function set_tax_rate() {
-		throw new NotImplementedException( 'set_tax_rate' );
+		$this->tax_rate = apply_filters( $this->get_filter_name( 'tax_rate' ), 0, $this->coupon );
 	}
 
 	/**
@@ -172,7 +224,7 @@ class CartLineCoupon extends OrderLineData {
 	 * @return void
 	 */
 	public function set_total_amount() {
-		throw new NotImplementedException( 'set_total_amount' );
+		$this->total_amount = apply_filters( $this->get_filter_name( 'total_amount' ), $this->discount_amount, $this->coupon );
 	}
 
 	/**
@@ -180,7 +232,7 @@ class CartLineCoupon extends OrderLineData {
 	 * @return void
 	 */
 	public function set_subtotal_amount() {
-		throw new NotImplementedException( 'set_subtotal_amount' );
+		$this->subtotal_amount = apply_filters( $this->get_filter_name( 'subtotal_amount' ), $this->discount_amount, $this->coupon );
 	}
 
 	/**
@@ -188,7 +240,7 @@ class CartLineCoupon extends OrderLineData {
 	 * @return void
 	 */
 	public function set_total_discount_amount() {
-		throw new NotImplementedException( 'set_total_discount_amount' );
+		$this->total_discount_amount = apply_filters( $this->get_filter_name( 'total_discount_amount' ), 0, $this->coupon );
 	}
 
 	/**
@@ -196,7 +248,7 @@ class CartLineCoupon extends OrderLineData {
 	 * @return void
 	 */
 	public function set_total_discount_tax_amount() {
-		throw new NotImplementedException( 'set_total_discount_tax_amount' );
+		$this->total_discount_tax_amount = apply_filters( $this->get_filter_name( 'tota_discount_tax_amount' ), 0, $this->coupon );
 	}
 
 	/**
@@ -204,7 +256,7 @@ class CartLineCoupon extends OrderLineData {
 	 * @return void
 	 */
 	public function set_total_tax_amount() {
-		throw new NotImplementedException( 'set_total_tax_amount' );
+		$this->total_tax_amount = apply_filters( $this->get_filter_name( 'total_tax_amount' ), $this->discount_tax_amount, $this->coupon );
 	}
 
 	/**
@@ -212,7 +264,7 @@ class CartLineCoupon extends OrderLineData {
 	 * @return void
 	 */
 	public function set_subtotal_tax_amount() {
-		throw new NotImplementedException( 'set_subtotal_tax_amount' );
+		$this->subtotal_tax_amount = apply_filters( $this->get_filter_name( 'subtotal_tax_amount' ), $this->discount_tax_amount, $this->coupon );
 	}
 
 	/**
@@ -220,7 +272,7 @@ class CartLineCoupon extends OrderLineData {
 	 * @return void
 	 */
 	public function set_type() {
-		throw new NotImplementedException( 'set_type' );
+		$this->type = apply_filters( $this->get_filter_name( 'type' ), $this->coupon->get_discount_type(), $this->coupon );
 	}
 
 	/**
@@ -228,7 +280,7 @@ class CartLineCoupon extends OrderLineData {
 	 * @return void
 	 */
 	public function set_product_url() {
-		throw new NotImplementedException( 'set_product_url' );
+		$this->product_url = apply_filters( $this->get_filter_name( 'product_url' ), null, $this->coupon );
 	}
 
 	/**
@@ -236,7 +288,7 @@ class CartLineCoupon extends OrderLineData {
 	 * @return void
 	 */
 	public function set_image_url() {
-		throw new NotImplementedException( 'set_image_url' );
+		$this->image_url = apply_filters( $this->get_filter_name( 'image_url' ), null, $this->coupon );
 	}
 
 	/**
@@ -244,6 +296,6 @@ class CartLineCoupon extends OrderLineData {
 	 * @return void
 	 */
 	public function set_compatability() {
-		throw new NotImplementedException( 'set_compatability' );
+		$this->compatability = apply_filters( $this->get_filter_name( 'compatability' ), array(), $this->coupon );
 	}
 }

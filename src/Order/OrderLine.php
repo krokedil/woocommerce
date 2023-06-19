@@ -11,19 +11,19 @@ use Krokedil\WooCommerce\OrderLineData;
  * Class to generate a order line item from the WooCommerce order item. The abstract class contains the methods that all different line item types have in common.
  */
 abstract class OrderLine extends OrderLineData {
-    /**
-     * Order line item.
-     *
-     * @var \WC_Order_Item $order_line_item
-     */
-    public $order_line_item;
+	/**
+	 * Order line item.
+	 *
+	 * @var \WC_Order_Item $order_line_item
+	 */
+	public $order_line_item;
 
-    /**
-     * Constructor.
-     *
-     * @param \WC_Order_Item $order_line_item The order line item.
-     * @param array $config Configuration array.
-     */
+	/**
+	 * Constructor.
+	 *
+	 * @param \WC_Order_Item $order_line_item The order line item.
+	 * @param array $config Configuration array.
+	 */
 	public function __construct( $order_line_item, $config = array() ) {
 		parent::__construct( $config );
 
@@ -48,12 +48,12 @@ abstract class OrderLine extends OrderLineData {
 	}
 
 
-    /**
+	/**
 	 * Abstract function to set product name
 	 * @return void
 	 */
 	public function set_name() {
-        $this->name = apply_filters( $this->get_filter_name( 'name' ), $this->order_line_item->get_name(), $this->order_line_item );
+		$this->name = apply_filters( $this->get_filter_name( 'name' ), $this->order_line_item->get_name(), $this->order_line_item );
 	}
 
 	/**
@@ -61,7 +61,7 @@ abstract class OrderLine extends OrderLineData {
 	 * @return void
 	 */
 	public function set_quantity() {
-        $this->quantity = apply_filters( $this->get_filter_name( 'quantity' ), $this->order_line_item->get_quantity(), $this->order_line_item );
+		$this->quantity = apply_filters( $this->get_filter_name( 'quantity' ), $this->order_line_item->get_quantity(), $this->order_line_item );
 	}
 
 	/**
@@ -69,7 +69,7 @@ abstract class OrderLine extends OrderLineData {
 	 * @return void
 	 */
 	public function set_unit_price() {
-        $this->unit_price = apply_filters( $this->get_filter_name( 'unit_price' ), $this->format_price( $this->order_line_item->get_total() / $this->order_line_item->get_quantity() ), $this->order_line_item );
+		$this->unit_price = apply_filters( $this->get_filter_name( 'unit_price' ), $this->format_price( $this->order_line_item->get_total() / $this->order_line_item->get_quantity() ), $this->order_line_item );
 	}
 
 	/**
@@ -90,7 +90,7 @@ abstract class OrderLine extends OrderLineData {
 		$taxes    = $this->order_line_item->get_taxes();
 		if ( ! empty( $taxes['total'] ) ) {
 			foreach ( $taxes['total'] as $tax_id => $tax_amount ) {
-				if ( $tax_amount > 0 ) {
+				if ( ! empty( $tax_amount ) ) {
 					$tax_rate = \WC_Tax::get_rate_percent_value( $tax_id ) * 100;
 					break;
 				}
@@ -105,7 +105,7 @@ abstract class OrderLine extends OrderLineData {
 	 * @return void
 	 */
 	public function set_total_amount() {
-        $this->total_amount = apply_filters( $this->get_filter_name( 'total_amount' ), $this->format_price( $this->order_line_item->get_total() ), $this->order_line_item );
+		$this->total_amount = apply_filters( $this->get_filter_name( 'total_amount' ), $this->format_price( $this->order_line_item->get_total() ), $this->order_line_item );
 	}
 
 	/**
@@ -122,7 +122,7 @@ abstract class OrderLine extends OrderLineData {
 	 * @return void
 	 */
 	public function set_total_tax_amount() {
-        $this->total_tax_amount = apply_filters( $this->get_filter_name( 'total_tax_amount' ), $this->format_price( $this->order_line_item->get_total_tax() ), $this->order_line_item );
+		$this->total_tax_amount = apply_filters( $this->get_filter_name( 'total_tax_amount' ), $this->format_price( $this->order_line_item->get_total_tax() ), $this->order_line_item );
 	}
 
 	/**
@@ -148,7 +148,7 @@ abstract class OrderLine extends OrderLineData {
 	 */
 	public function set_image_url() {
 		$this->image_url = apply_filters( $this->get_filter_name( 'image_url' ), null, $this->order_line_item );
-    }
+	}
 
 	/**
 	 * Abstract function to set product compatability
