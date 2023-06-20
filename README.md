@@ -25,7 +25,7 @@ To require this package, you need to require it in your composer.json file and a
 
 ### Usage
 
-The library currently contains helper classes to generate formated data from a WooCommerce cart, or a WooCommerce order.
+The library currently contains helper classes to generate formated data from a WooCommerce cart, a WooCommerce order or from a Store API Cart.
 
 To get started, its a good idea to setup a configuration array with the data with the configurations that you want to use when generating the data. The configuration will setup some things that will be used through the library, like what format to use for the price, and what slug to use as a prefix for all the filters used.
 

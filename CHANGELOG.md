@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes of wp-api are documented in this file.
+All notable changes of krokedil/woocommerce are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ------------------
+
+## [1.2.1] - 2023-06-20
+
+### Changes
+* We now use the first package returned when getting packages from the cart instead of the one with the key 0. This should improve compatibility with other plugins that might use something other then a incrementing integer for the package key. For example WooCommerce Advanced Shipping Packages, which uses the post id of the package as the key.
 
 ## [1.2.0] - 2023-06-19
 
