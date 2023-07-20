@@ -15,6 +15,12 @@ defined( 'ABSPATH' ) || exit;
  * Order line coupon class.
  */
 class OrderLineCoupon extends OrderLineData {
+	/**
+	 * Filter prefix.
+	 *
+	 * @var string
+	 */
+	public $filter_prefix = 'order_line_coupon';
 
 	/**
 	 * WooCommerce order item coupon.
@@ -264,9 +270,7 @@ class OrderLineCoupon extends OrderLineData {
 	 * @return void
 	 */
 	public function set_type() {
-		$meta_data  = $this->coupon->get_meta( 'coupon_data', true );
-		$type       = isset( $meta_data['discount_type'] ) ? $meta_data['discount_type'] : 'fixed_cart';
-		$this->type = apply_filters( $this->get_filter_name( 'type' ), $type, $this->coupon );
+		$this->type = apply_filters( $this->get_filter_name( 'type' ), 'discount', $this->coupon );
 	}
 
 	/**

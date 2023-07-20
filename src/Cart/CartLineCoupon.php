@@ -8,7 +8,6 @@
 namespace Krokedil\WooCommerce\Cart;
 
 use Krokedil\WooCommerce\OrderLineData;
-use _PHPStan_503e82092\Nette\NotImplementedException;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -272,7 +271,7 @@ class CartLineCoupon extends OrderLineData {
 	 * @return void
 	 */
 	public function set_type() {
-		$this->type = apply_filters( $this->get_filter_name( 'type' ), $this->coupon->get_discount_type(), $this->coupon );
+		$this->type = apply_filters( $this->get_filter_name( 'type' ), 'discount', $this->coupon );
 	}
 
 	/**
