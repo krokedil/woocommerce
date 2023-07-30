@@ -84,7 +84,15 @@ class Cart extends OrderData {
 
 			// Get the shipping rates for the package.
 			$shipping_rates = $package['rates'] ?? array();
-			foreach ( $shipping_ids as $shipping_id ) {
+			foreach ( $shipping_ids as $key => $shipping_id ) {
+				// Skip shipping lines for free trials.
+				if ( class_exists( 'WC_Subscriptions_Cart' ) && \WC_Subscriptions_Cart::cart_contains_subscription() ) {
+					$pattern = '/_after_a_\d+_\w+_trial/';
+					if ( preg_match( $pattern, $key ) ) {
+						continue;
+					}
+				}
+
 				if ( $shipping_rates[ $shipping_id ] ?? false ) {
 					$shipping_rate         = $shipping_rates[ $shipping_id ];
 					$shipping_line         = new CartLineShipping( $shipping_rate, $this->config );
