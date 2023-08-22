@@ -73,17 +73,23 @@ class Cart extends OrderData {
 		if ( $this->cart->needs_shipping() && $this->cart->show_shipping() ) {
 			$chosen_shipping_methods = WC()->session->get( 'chosen_shipping_methods' );
 
+			// If the cart contain only free trial, we'll ignore the shipping methods. The shipping method will still be included in the subscription renewal.
+			if ( class_exists( 'WC_Subscriptions_Cart' ) && \WC_Subscriptions_Cart::all_cart_items_have_free_trial() ) {
+				return;
+			}
+
 			if ( empty( $chosen_shipping_methods ) ) {
 				return;
 			}
 
-			$shipping_ids   = array_unique( $chosen_shipping_methods );
-			// Only use the first package in the cart.
-			$packages = WC()->shipping->get_packages() ?? array();
-			$package  = reset( $packages );
+			$shipping_ids = array_unique( $chosen_shipping_methods );
 
-			// Get the shipping rates for the package.
-			$shipping_rates = $package['rates'] ?? array();
+			// Calculate shipping since WC Subscriptions will reset the shipping. See WC_Subscriptions_Cart::maybe_restore_shipping_methods()
+			WC()->shipping()->calculate_shipping( WC()->cart->get_shipping_packages() );
+
+			$packages       = WC()->shipping->get_packages();
+			$shipping_rates = reset( $packages )['rates'] ?? array();
+
 			foreach ( $shipping_ids as $key => $shipping_id ) {
 				// Skip shipping lines for free trials.
 				if ( class_exists( 'WC_Subscriptions_Cart' ) && \WC_Subscriptions_Cart::cart_contains_subscription() ) {
