@@ -59,7 +59,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_billing_first_name() {
-		$this->billing_first_name = apply_filters( $this->get_filter_name( 'first_name' ), stripslashes( WC()->checkout->get_value( 'billing_first_name' ) ), WC()->checkout ) ;
+		$this->billing_first_name = apply_filters( $this->get_filter_name( 'first_name' ), stripslashes( WC()->checkout->get_value( 'billing_first_name' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -68,7 +68,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_billing_last_name() {
-		$this->billing_last_name = apply_filters( $this->get_filter_name( 'last_name' ), stripslashes( WC()->checkout->get_value( 'billing_last_name' ) ), WC()->checkout );
+		$this->billing_last_name = apply_filters( $this->get_filter_name( 'last_name' ), stripslashes( WC()->checkout->get_value( 'billing_last_name' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -77,7 +77,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_billing_company() {
-		$this->billing_company = apply_filters( $this->get_filter_name( 'company' ), stripslashes( WC()->checkout->get_value( 'billing_company' ) ), WC()->checkout );
+		$this->billing_company = apply_filters( $this->get_filter_name( 'company' ), stripslashes( WC()->checkout->get_value( 'billing_company' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -86,7 +86,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_billing_address_1() {
-		$this->billing_address_1 = apply_filters( $this->get_filter_name( 'address_1' ), stripslashes( WC()->checkout->get_value( 'billing_address_1' ) ), WC()->checkout );
+		$this->billing_address_1 = apply_filters( $this->get_filter_name( 'address_1' ), stripslashes( WC()->checkout->get_value( 'billing_address_1' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -95,7 +95,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_billing_address_2() {
-		$this->billing_address_2 = apply_filters( $this->get_filter_name( 'address_2' ), stripslashes( WC()->checkout->get_value( 'billing_address_2' ) ), WC()->checkout );
+		$this->billing_address_2 = apply_filters( $this->get_filter_name( 'address_2' ), stripslashes( WC()->checkout->get_value( 'billing_address_2' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -104,7 +104,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_billing_city() {
-		$this->billing_city = apply_filters( $this->get_filter_name( 'city' ), stripslashes( WC()->checkout->get_value( 'billing_city' ) ), WC()->checkout );
+		$this->billing_city = apply_filters( $this->get_filter_name( 'city' ), stripslashes( WC()->checkout->get_value( 'billing_city' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -113,7 +113,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_billing_state() {
-		$this->billing_state = apply_filters( $this->get_filter_name( 'state' ), stripslashes( WC()->checkout->get_value( 'billing_state' ) ), WC()->checkout );
+		$this->billing_state = apply_filters( $this->get_filter_name( 'state' ), stripslashes( WC()->checkout->get_value( 'billing_state' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -122,7 +122,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_billing_postcode() {
-		$this->billing_postcode = apply_filters( $this->get_filter_name( 'postcode' ), stripslashes( WC()->checkout->get_value( 'billing_postcode' ) ), WC()->checkout );
+		$this->billing_postcode = apply_filters( $this->get_filter_name( 'postcode' ), stripslashes( WC()->checkout->get_value( 'billing_postcode' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -131,7 +131,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_billing_country() {
-		$this->billing_country = apply_filters( $this->get_filter_name( 'country' ), stripslashes( WC()->checkout->get_value( 'billing_country' ) ), WC()->checkout );
+		$this->billing_country = apply_filters( $this->get_filter_name( 'country' ), stripslashes( WC()->checkout->get_value( 'billing_country' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -140,7 +140,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_billing_email() {
-		$this->billing_email = apply_filters( $this->get_filter_name( 'email' ), stripslashes( WC()->checkout->get_value( 'billing_email' ) ), WC()->checkout );
+		$this->billing_email = apply_filters( $this->get_filter_name( 'email' ), stripslashes( WC()->checkout->get_value( 'billing_email' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -149,7 +149,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_billing_phone() {
-		$this->billing_phone = apply_filters( $this->get_filter_name( 'phone' ), stripslashes( WC()->checkout->get_value( 'billing_phone' ) ), WC()->checkout );
+		$this->billing_phone = apply_filters( $this->get_filter_name( 'phone' ), stripslashes( WC()->checkout->get_value( 'billing_phone' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -158,7 +158,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_shipping_email() {
-		$this->shipping_email = apply_filters( $this->get_filter_name( 'email' ), stripslashes( WC()->checkout->get_value( 'shipping_email' ) ), WC()->checkout );
+		$this->shipping_email = apply_filters( $this->get_filter_name( 'email' ), stripslashes( WC()->checkout->get_value( 'shipping_email' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -167,7 +167,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_shipping_first_name() {
-		$this->shipping_first_name = apply_filters( $this->get_filter_name( 'first_name' ), stripslashes( WC()->checkout->get_value( 'shipping_first_name' ) ), WC()->checkout );
+		$this->shipping_first_name = apply_filters( $this->get_filter_name( 'first_name' ), stripslashes( WC()->checkout->get_value( 'shipping_first_name' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -176,7 +176,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_shipping_last_name() {
-		$this->shipping_last_name = apply_filters( $this->get_filter_name( 'last_name' ), stripslashes( WC()->checkout->get_value( 'shipping_last_name' ) ), WC()->checkout );
+		$this->shipping_last_name = apply_filters( $this->get_filter_name( 'last_name' ), stripslashes( WC()->checkout->get_value( 'shipping_last_name' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -185,7 +185,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_shipping_company() {
-		$this->shipping_company = apply_filters( $this->get_filter_name( 'company' ), stripslashes( WC()->checkout->get_value( 'shipping_company' ) ), WC()->checkout );
+		$this->shipping_company = apply_filters( $this->get_filter_name( 'company' ), stripslashes( WC()->checkout->get_value( 'shipping_company' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -194,7 +194,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_shipping_address_1() {
-		$this->shipping_address_1 = apply_filters( $this->get_filter_name( 'address_1' ), stripslashes( WC()->checkout->get_value( 'shipping_address_1' ) ), WC()->checkout );
+		$this->shipping_address_1 = apply_filters( $this->get_filter_name( 'address_1' ), stripslashes( WC()->checkout->get_value( 'shipping_address_1' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -203,7 +203,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_shipping_address_2() {
-		$this->shipping_address_2 = apply_filters( $this->get_filter_name( 'address_2' ), stripslashes( WC()->checkout->get_value( 'shipping_address_2' ) ), WC()->checkout );
+		$this->shipping_address_2 = apply_filters( $this->get_filter_name( 'address_2' ), stripslashes( WC()->checkout->get_value( 'shipping_address_2' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -212,7 +212,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_shipping_city() {
-		$this->shipping_city = apply_filters( $this->get_filter_name( 'city' ), stripslashes( WC()->checkout->get_value( 'shipping_city' ) ), WC()->checkout );
+		$this->shipping_city = apply_filters( $this->get_filter_name( 'city' ), stripslashes( WC()->checkout->get_value( 'shipping_city' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -221,7 +221,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_shipping_state() {
-		$this->shipping_state = apply_filters( $this->get_filter_name( 'state' ), stripslashes( WC()->checkout->get_value( 'shipping_state' ) ), WC()->checkout );
+		$this->shipping_state = apply_filters( $this->get_filter_name( 'state' ), stripslashes( WC()->checkout->get_value( 'shipping_state' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -230,7 +230,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_shipping_postcode() {
-		$this->shipping_postcode = apply_filters( $this->get_filter_name( 'postcode' ), stripslashes( WC()->checkout->get_value( 'shipping_postcode' ) ), WC()->checkout );
+		$this->shipping_postcode = apply_filters( $this->get_filter_name( 'postcode' ), stripslashes( WC()->checkout->get_value( 'shipping_postcode' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -239,7 +239,7 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_shipping_country() {
-		$this->shipping_country = apply_filters( $this->get_filter_name( 'country' ), stripslashes( WC()->checkout->get_value( 'shipping_country' ) ), WC()->checkout );
+		$this->shipping_country = apply_filters( $this->get_filter_name( 'country' ), stripslashes( WC()->checkout->get_value( 'shipping_country' ) ?? '' ), WC()->checkout );
 	}
 
 	/**
@@ -248,6 +248,6 @@ class CartCustomer extends CustomerData {
 	 * @return void
 	 */
 	public function set_shipping_phone() {
-		$this->shipping_phone = apply_filters( $this->get_filter_name( 'phone' ), stripslashes( WC()->checkout->get_value( 'shipping_phone' ) ), WC()->checkout );
+		$this->shipping_phone = apply_filters( $this->get_filter_name( 'phone' ), stripslashes( WC()->checkout->get_value( 'shipping_phone' ) ?? '' ), WC()->checkout );
 	}
 }
