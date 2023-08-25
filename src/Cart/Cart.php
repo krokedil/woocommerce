@@ -75,7 +75,11 @@ class Cart extends OrderData {
 
 			// If the cart contain only free trial, we'll ignore the shipping methods. The shipping method will still be included in the subscription renewal.
 			if ( class_exists( 'WC_Subscriptions_Cart' ) && \WC_Subscriptions_Cart::all_cart_items_have_free_trial() ) {
-				return;
+
+				// When a renewal fails for free trial subscription, it will need payment. Only on the initial subscription is payment not needed, and we must therefore not charge for shipping.
+				if ( ! WC()->cart->needs_payment() ) {
+					return;
+				}
 			}
 
 			if ( empty( $chosen_shipping_methods ) ) {
