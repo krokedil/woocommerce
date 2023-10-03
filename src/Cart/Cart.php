@@ -73,18 +73,36 @@ class Cart extends OrderData {
 		if ( $this->cart->needs_shipping() && $this->cart->show_shipping() ) {
 			$chosen_shipping_methods = WC()->session->get( 'chosen_shipping_methods' );
 
+			// If the cart contain only free trial, we'll ignore the shipping methods. The shipping method will still be included in the subscription renewal.
+			if ( class_exists( 'WC_Subscriptions_Cart' ) && \WC_Subscriptions_Cart::all_cart_items_have_free_trial() ) {
+
+				// When a renewal fails for free trial subscription, it will need payment. Only on the initial subscription is payment not needed, and we must therefore not charge for shipping.
+				if ( ! WC()->cart->needs_payment() ) {
+					return;
+				}
+			}
+
 			if ( empty( $chosen_shipping_methods ) ) {
 				return;
 			}
 
-			$shipping_ids   = array_unique( $chosen_shipping_methods );
-			// Only use the first package in the cart.
-			$packages = WC()->shipping->get_packages() ?? array();
-			$package  = reset( $packages );
+			$shipping_ids = array_unique( $chosen_shipping_methods );
 
-			// Get the shipping rates for the package.
-			$shipping_rates = $package['rates'] ?? array();
-			foreach ( $shipping_ids as $shipping_id ) {
+			// Calculate shipping since WC Subscriptions will reset the shipping. See WC_Subscriptions_Cart::maybe_restore_shipping_methods()
+			WC()->shipping()->calculate_shipping( WC()->cart->get_shipping_packages() );
+
+			$packages       = WC()->shipping->get_packages();
+			$shipping_rates = reset( $packages )['rates'] ?? array();
+
+			foreach ( $shipping_ids as $key => $shipping_id ) {
+				// Skip shipping lines for free trials.
+				if ( class_exists( 'WC_Subscriptions_Cart' ) && \WC_Subscriptions_Cart::cart_contains_subscription() ) {
+					$pattern = '/_after_a_\d+_\w+_trial/';
+					if ( preg_match( $pattern, $key ) ) {
+						continue;
+					}
+				}
+
 				if ( $shipping_rates[ $shipping_id ] ?? false ) {
 					$shipping_rate         = $shipping_rates[ $shipping_id ];
 					$shipping_line         = new CartLineShipping( $shipping_rate, $this->config );

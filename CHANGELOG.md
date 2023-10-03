@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ------------------
 
+## [1.3.0] - 2023-10-03
+
+### Added
+* Added support for WooCommerce Subscriptions. We will no longer add shipping cost if the order is a free trial subscription without any shipping costs
+
+### Fixed
+* We will now default to empty strings in customer details if no value can be found from the checkout object.
+
 ## [1.2.1] - 2023-06-20
 
 ### Changes
