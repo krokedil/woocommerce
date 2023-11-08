@@ -22,7 +22,7 @@ abstract class OrderLine extends OrderLineData {
 	 * Constructor.
 	 *
 	 * @param \WC_Order_Item $order_line_item The order line item.
-	 * @param array $config Configuration array.
+	 * @param array          $config Configuration array.
 	 */
 	public function __construct( $order_line_item, $config = array() ) {
 		parent::__construct( $config );
@@ -50,6 +50,7 @@ abstract class OrderLine extends OrderLineData {
 
 	/**
 	 * Abstract function to set product name
+	 *
 	 * @return void
 	 */
 	public function set_name() {
@@ -58,6 +59,7 @@ abstract class OrderLine extends OrderLineData {
 
 	/**
 	 * Abstract function to set product quantity
+	 *
 	 * @return void
 	 */
 	public function set_quantity() {
@@ -66,6 +68,7 @@ abstract class OrderLine extends OrderLineData {
 
 	/**
 	 * Abstract function to set product unit price
+	 *
 	 * @return void
 	 */
 	public function set_unit_price() {
@@ -83,6 +86,7 @@ abstract class OrderLine extends OrderLineData {
 
 	/**
 	 * Abstract function to set product tax rate
+	 *
 	 * @return void
 	 */
 	public function set_tax_rate() {
@@ -90,8 +94,15 @@ abstract class OrderLine extends OrderLineData {
 		$taxes    = $this->order_line_item->get_taxes();
 		if ( ! empty( $taxes['total'] ) ) {
 			foreach ( $taxes['total'] as $tax_id => $tax_amount ) {
-				if ( ! empty( $tax_amount ) ) {
+				if ( floatval( $tax_amount ) > 0.0 ) {
 					$tax_rate = \WC_Tax::get_rate_percent_value( $tax_id ) * 100;
+
+					// If the tax rate cannot be retrieved by using the tax id, use the tax amount to manually calculate the tax rate. NOTE: Avatax tax id cannot be retrieved from WC_Tax.
+					if ( empty( $tax_rate ) ) {
+						$total_tax_amount = array_sum( array_values( $taxes['total'] ) ) * 100;
+						$tax_rate         = $this->order_line_item->get_total() === 0 ? 0 : $total_tax_amount / $this->order_line_item->get_total() * 100;
+					}
+
 					break;
 				}
 			}
@@ -102,6 +113,7 @@ abstract class OrderLine extends OrderLineData {
 
 	/**
 	 * Abstract function to set product total amount
+	 *
 	 * @return void
 	 */
 	public function set_total_amount() {
@@ -119,6 +131,7 @@ abstract class OrderLine extends OrderLineData {
 
 	/**
 	 * Abstract function to set product total tax amount
+	 *
 	 * @return void
 	 */
 	public function set_total_tax_amount() {
@@ -136,6 +149,7 @@ abstract class OrderLine extends OrderLineData {
 
 	/**
 	 * Abstract function to set product url
+	 *
 	 * @return void
 	 */
 	public function set_product_url() {
@@ -144,6 +158,7 @@ abstract class OrderLine extends OrderLineData {
 
 	/**
 	 * Abstract function to set product image url
+	 *
 	 * @return void
 	 */
 	public function set_image_url() {
@@ -152,6 +167,7 @@ abstract class OrderLine extends OrderLineData {
 
 	/**
 	 * Abstract function to set product compatability
+	 *
 	 * @return void
 	 */
 	public function set_compatability() {
