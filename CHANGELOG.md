@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+* Removed the extra shipping package that WC Subscriptions add when the cart contain a subscription with a free trial. We can remove the package because if it is a free trial, there should not be any cost for the customer. If we kept it, the customer would have been charged for the shipping cost.
+
 ------------------
 
 ## [1.3.0] - 2023-10-03

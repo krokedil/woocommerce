@@ -88,11 +88,27 @@ class Cart extends OrderData {
 
 			$shipping_ids = array_unique( $chosen_shipping_methods );
 
-			// Calculate shipping since WC Subscriptions will reset the shipping. See WC_Subscriptions_Cart::maybe_restore_shipping_methods()
+			// Calculate shipping since WC Subscriptions will reset the shipping. See WC_Subscriptions_Cart::maybe_restore_shipping_methods().
 			WC()->shipping()->calculate_shipping( WC()->cart->get_shipping_packages() );
 
-			$packages       = WC()->shipping->get_packages();
+			// Remove shipping package for free trials. See WC_Subscriptions_Cart::set_cart_shipping_packages().
+			$packages = WC()->shipping->get_packages();
+			foreach ( $packages as $index => $package ) {
+				foreach ( $package['contents'] as $cart_item_key => $cart_item ) {
+					if ( class_exists( 'WC_Subscriptions_Product' ) && \WC_Subscriptions_Product::get_trial_length( $cart_item['data'] ) > 0 ) {
+						unset( $packages[ $index ]['contents'][ $cart_item_key ] );
+					}
+				}
+
+				if ( empty( $packages[ $index ]['contents'] ) ) {
+					unset( $packages[ $index ] );
+				}
+			}
+
 			$shipping_rates = reset( $packages )['rates'] ?? array();
+			if ( empty( $shipping_rates ) ) {
+				return;
+			}
 
 			foreach ( $shipping_ids as $key => $shipping_id ) {
 				// Skip shipping lines for free trials.
