@@ -94,7 +94,7 @@ abstract class OrderLine extends OrderLineData {
 		$taxes    = $this->order_line_item->get_taxes();
 		if ( ! empty( $taxes['total'] ) ) {
 			foreach ( $taxes['total'] as $tax_id => $tax_amount ) {
-				if ( floatval( $tax_amount ) > 0.0 ) {
+				if ( abs( floatval( $tax_amount ) ) > 0.0 ) {
 					$tax_rate = \WC_Tax::get_rate_percent_value( $tax_id ) * 100;
 
 					// If the tax rate cannot be retrieved by using the tax id, use the tax amount to manually calculate the tax rate. NOTE: Avatax tax id cannot be retrieved from WC_Tax.
