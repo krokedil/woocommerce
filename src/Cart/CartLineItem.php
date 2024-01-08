@@ -69,6 +69,7 @@ class CartLineItem extends OrderLineData {
 
 	/**
 	 * Function to set product name
+	 *
 	 * @return void
 	 */
 	public function set_name() {
@@ -79,6 +80,7 @@ class CartLineItem extends OrderLineData {
 
 	/**
 	 * Function to set product sku
+	 *
 	 * @return void
 	 */
 	public function set_sku() {
@@ -96,6 +98,7 @@ class CartLineItem extends OrderLineData {
 
 	/**
 	 * Function to set product quantity
+	 *
 	 * @return void
 	 */
 	public function set_quantity() {
@@ -104,6 +107,7 @@ class CartLineItem extends OrderLineData {
 
 	/**
 	 * Function to set product unit price
+	 *
 	 * @return void
 	 */
 	public function set_unit_price() {
@@ -114,6 +118,7 @@ class CartLineItem extends OrderLineData {
 
 	/**
 	 * Function to set product subtotal unit price
+	 *
 	 * @return void
 	 */
 	public function set_subtotal_unit_price() {
@@ -124,6 +129,7 @@ class CartLineItem extends OrderLineData {
 
 	/**
 	 * Function to set product tax rate
+	 *
 	 * @return void
 	 */
 	public function set_tax_rate() {
@@ -135,15 +141,15 @@ class CartLineItem extends OrderLineData {
 			if ( isset( $vat['rate'] ) ) {
 				$item_tax_rate = round( $vat['rate'] * 100 );
 			} else {
-				$item_tax_rate = 0;
+				$item_tax_rate = 0.0 === floatval( $this->cart_item['line_total'] ) ? 0 : round( $this->cart_item['line_tax'] / $this->cart_item['line_total'] * 10000 );
 			}
 		}
-
 		$this->tax_rate = apply_filters( $this->get_filter_name( 'tax_rate' ), $item_tax_rate, $this->cart_item );
 	}
 
 	/**
 	 * Function to set product total amount
+	 *
 	 * @return void
 	 */
 	public function set_total_amount() {
@@ -152,6 +158,7 @@ class CartLineItem extends OrderLineData {
 
 	/**
 	 * Function to set product subtotal amount
+	 *
 	 * @return void
 	 */
 	public function set_subtotal_amount() {
@@ -160,6 +167,7 @@ class CartLineItem extends OrderLineData {
 
 	/**
 	 * Function to set product total discount amount
+	 *
 	 * @return void
 	 */
 	public function set_total_discount_amount() {
@@ -169,10 +177,11 @@ class CartLineItem extends OrderLineData {
 	}
 
 	/**
-     * Abstract function to set product total discount tax amount
-     * @return void
-     */
-    public function set_total_discount_tax_amount() {
+	 * Abstract function to set product total discount tax amount
+	 *
+	 * @return void
+	 */
+	public function set_total_discount_tax_amount() {
 		$total_discount_tax_amount = $this->cart_item['line_subtotal_tax'] - $this->cart_item['line_tax'];
 
 		$this->total_discount_tax_amount = apply_filters( $this->get_filter_name( 'total_discount_tax_amount' ), $this->format_price( $total_discount_tax_amount ), $this->cart_item );
@@ -180,6 +189,7 @@ class CartLineItem extends OrderLineData {
 
 	/**
 	 * Function to set product total tax amount
+	 *
 	 * @return void
 	 */
 	public function set_total_tax_amount() {
@@ -188,6 +198,7 @@ class CartLineItem extends OrderLineData {
 
 	/**
 	 * Function to set product subtotal tax amount
+	 *
 	 * @return void
 	 */
 	public function set_subtotal_tax_amount() {
@@ -196,6 +207,7 @@ class CartLineItem extends OrderLineData {
 
 	/**
 	 * Function to set product type
+	 *
 	 * @return void
 	 */
 	public function set_type() {
@@ -204,6 +216,7 @@ class CartLineItem extends OrderLineData {
 
 	/**
 	 * Function to set product url
+	 *
 	 * @return void
 	 */
 	public function set_product_url() {
@@ -217,6 +230,7 @@ class CartLineItem extends OrderLineData {
 
 	/**
 	 * Function to set product image url
+	 *
 	 * @return void
 	 */
 	public function set_image_url() {
@@ -230,6 +244,7 @@ class CartLineItem extends OrderLineData {
 
 	/**
 	 * Function to set product compatability
+	 *
 	 * @return void
 	 */
 	public function set_compatability() {
