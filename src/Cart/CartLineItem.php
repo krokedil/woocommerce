@@ -197,9 +197,7 @@ class CartLineItem extends OrderLineData {
 	 * @return void
 	 */
 	public function set_total_tax_amount() {
-		$taxes                  = count( $this->cart_item['line_tax_data']['total'] );
-		$total_tax_amount       = $taxes > 1 ? array_sum( $this->cart_item['line_tax_data']['total'] ) : $this->cart_item['line_tax'];
-		$this->total_tax_amount = apply_filters( $this->get_filter_name( 'total_tax_amount' ), $this->format_price( $total_tax_amount ), $this->cart_item );
+		$this->total_tax_amount = apply_filters( $this->get_filter_name( 'total_tax_amount' ), $this->format_price( $this->cart_item['line_tax'] ), $this->cart_item );
 	}
 
 	/**
