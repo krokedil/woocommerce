@@ -135,19 +135,20 @@ class CartLineItem extends OrderLineData {
 	public function set_tax_rate() {
 		$item_tax_rate = 0;
 		if ( $this->product->is_taxable() && $this->cart_item['line_subtotal_tax'] > 0 ) {
-			$tax           = new \WC_Tax();
-			$tax_rates     = $tax->get_rates( $this->product->get_tax_class() );
-			$item_tax_rate = array_sum(
-				array_map(
+			$tax       = new \WC_Tax();
+			$tax_rates = $tax->get_rates( $this->product->get_tax_class() );
+			if ( empty( $tax_rates ) ) {
+				$item_tax_rate = 0.0 === floatval( $this->cart_item['line_total'] ) ? 0 : round( $this->cart_item['line_tax'] / $this->cart_item['line_total'] * 10000 );
+			} else {
+				$item_tax_rate = array_map(
 					function ( $i ) {
-						return round( $i['rate'] * 100 ) ?? 0;
+						return round( ( $i['rate'] ?? 0 ) * 100 );
 					},
 					$tax_rates
-				)
-			);
-
-			$item_tax_rate = 0.0 === floatval( $this->cart_item['line_total'] ) ? 0 : round( $this->cart_item['line_tax'] / $this->cart_item['line_total'] * 10000 );
+				);
+			}
 		}
+
 		$this->tax_rate = apply_filters( $this->get_filter_name( 'tax_rate' ), $item_tax_rate, $this->cart_item );
 	}
 
