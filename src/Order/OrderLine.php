@@ -95,24 +95,23 @@ abstract class OrderLine extends OrderLineData {
 		if ( ! empty( $taxes['total'] ) ) {
 			foreach ( $taxes['total'] as $tax_id => $tax_amount ) {
 				if ( abs( floatval( $tax_amount ) ) > 0.0 ) {
-					$tax_rate = \WC_Tax::get_rate_percent_value( $tax_id ) * 100;
+					$tax_rate += \WC_Tax::get_rate_percent_value( $tax_id ) * 100;
 
 					// If the tax rate cannot be retrieved by using the tax id, use the tax amount to manually calculate the tax rate. NOTE: Avatax tax id cannot be retrieved from WC_Tax.
 					if ( empty( $tax_rate ) ) {
 						$total_tax_amount = array_sum( array_values( $taxes['total'] ) ) * 100;
 						$tax_rate         = $this->order_line_item->get_total() === 0 ? 0 : $total_tax_amount / $this->order_line_item->get_total() * 100;
-					}
 
-					break;
+					}
 				}
 			}
-		}
 
-		$this->tax_rate = apply_filters( $this->get_filter_name( 'tax_rate' ), $tax_rate, $this->order_line_item );
+			$this->tax_rate = apply_filters( $this->get_filter_name( 'tax_rate' ), $tax_rate, $this->order_line_item );
+		}
 	}
 
 	/**
-	 * Abstract function to set product total amount
+	 * Abstract function to set product total amount.
 	 *
 	 * @return void
 	 */

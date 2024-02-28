@@ -112,10 +112,14 @@ class CartLineShipping extends OrderLineData {
 		// Get the first key from the tax rates array.
 		$taxes = $this->shipping_rate->get_taxes;
 		if ( ! empty( $taxes ) ) {
-			$tax_rate_id   = array_key_first( $taxes );
-			$_tax          = new \WC_Tax();
-			$vat           = $_tax->get_rate_percent_value( $tax_rate_id );
-			$item_tax_rate = round( $vat * 100 );
+			$tax      = new \WC_Tax();
+			$tax_rate = 0;
+
+			// There may be more than one tax rate applied. This is always the case when you have multiple tax rates defined under the same tax group with different priority.
+			foreach ( $taxes as $tax_id => $tax_amount ) {
+				$tax_rate += $tax->get_rate_percent_value( $tax_id );
+			}
+			$item_tax_rate = round( $tax_rate * 100 );
 		} else {
 			$item_tax_rate = 0.0 === floatval( $this->shipping_rate->get_cost() ) ? 0 : round( WC()->cart->get_shipping_tax() / $this->shipping_rate->get_cost() * 10000 );
 		}
