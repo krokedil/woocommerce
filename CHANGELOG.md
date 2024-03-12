@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ------------------
 
+## [1.5.0] - 2024-03-12
+### Added
+* Added support for multiple taxes per order line item.
+
+### Fixed
+* Fixed an issue that caused a critical error if the cart contained any coupon. This issue was introduced in WC v.8.7.0 where the metadata "coupon_data" has been removed.
+
 ## [1.4.0] - 2024-01-08
 ### Added
 * Added support for AvaTax.
