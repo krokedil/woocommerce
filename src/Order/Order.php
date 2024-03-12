@@ -31,7 +31,7 @@ class Order extends OrderData {
 	 * Constructor.
 	 *
 	 * @param \WC_Order|\WC_Order_Refund $order The WooCommerce order.
-	 * @param array    $config Configuration array.
+	 * @param array                      $config Configuration array.
 	 */
 	public function __construct( $order, $config = array() ) {
 		parent::__construct( $config );
@@ -54,6 +54,7 @@ class Order extends OrderData {
 	}
 	/**
 	 * Sets the line items.
+	 *
 	 * @return void
 	 */
 	public function set_line_items() {
@@ -67,6 +68,7 @@ class Order extends OrderData {
 
 	/**
 	 * Sets the shipping lines.
+	 *
 	 * @return void
 	 */
 	public function set_line_shipping() {
@@ -86,7 +88,7 @@ class Order extends OrderData {
 	public function set_line_coupons() {
 		// Smart coupons.
 		foreach ( $this->order->get_items( 'coupon' ) as $coupon ) {
-			$discount_type = $coupon->get_meta( 'coupon_data' )['discount_type'];
+			$discount_type = $coupon->meta_exists( 'coupon_data' ) ? $coupon->get_meta( 'coupon_data' )['discount_type'] : ( new \WC_Coupon( $coupon->get_name() ) )->get_discount_type();
 
 			if ( 'smart_coupon' === $discount_type || 'store_credit' === $discount_type ) {
 				$coupon_line = new OrderLineCoupon( $this->config );
@@ -139,6 +141,7 @@ class Order extends OrderData {
 
 	/**
 	 * Sets the fee lines.
+	 *
 	 * @return void
 	 */
 	public function set_line_fees() {
@@ -152,6 +155,7 @@ class Order extends OrderData {
 
 	/**
 	 * Sets the compatibility lines.
+	 *
 	 * @return void
 	 */
 	public function set_line_compatibility() {
@@ -160,6 +164,7 @@ class Order extends OrderData {
 
 	/**
 	 * Sets the customer data.
+	 *
 	 * @return void
 	 */
 	public function set_customer() {
@@ -168,6 +173,7 @@ class Order extends OrderData {
 
 	/**
 	 * Sets the total ex tax.
+	 *
 	 * @return void
 	 */
 	public function set_total() {
@@ -176,6 +182,7 @@ class Order extends OrderData {
 
 	/**
 	 * Sets the total tax.
+	 *
 	 * @return void
 	 */
 	public function set_total_tax() {
@@ -184,6 +191,7 @@ class Order extends OrderData {
 
 	/**
 	 * Sets the subtotal ex tax.
+	 *
 	 * @return void
 	 */
 	public function set_subtotal() {
@@ -192,10 +200,11 @@ class Order extends OrderData {
 
 	/**
 	 * Sets the subtotal tax.
+	 *
 	 * @return void
 	 */
 	public function set_subtotal_tax() {
 		// TODO - Subtotal tax
-		//$this->subtotal_tax = $this->format_price( $this->order->get_subtotal_tax() );
+		// $this->subtotal_tax = $this->format_price( $this->order->get_subtotal_tax() );
 	}
 }
