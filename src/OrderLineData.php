@@ -235,7 +235,7 @@ abstract class OrderLineData extends Base {
 	 *
 	 * @return void
 	 */
-	abstract public function set_compatability();
+	abstract public function set_compatibility();
 
 	/**
 	 * Function to get product name
