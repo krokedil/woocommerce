@@ -44,7 +44,7 @@ abstract class OrderLine extends OrderLineData {
 		$this->set_type();
 		$this->set_product_url();
 		$this->set_image_url();
-		$this->set_compatability();
+		$this->set_compatibility();
 	}
 
 
@@ -169,7 +169,7 @@ abstract class OrderLine extends OrderLineData {
 	 *
 	 * @return void
 	 */
-	public function set_compatability() {
+	public function set_compatibility() {
 		$this->compatability = apply_filters( $this->get_filter_name( 'compatability' ), array(), $this->order_line_item );
 	}
 }
