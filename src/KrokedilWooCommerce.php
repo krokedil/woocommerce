@@ -2,6 +2,7 @@
 namespace Krokedil\WooCommerce;
 
 use Krokedil\WooCommerce\Compatibility\Compatibility;
+use Krokedil\WooCommerce\Compatibility\Giftcards\SmartCoupons;
 
 /**
  * Main Krokedil WooCommerce Class

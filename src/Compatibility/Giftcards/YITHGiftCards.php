@@ -1,32 +1,13 @@
 <?php
 namespace Krokedil\WooCommerce\Compatibility\Giftcards;
 
-use Krokedil\WooCommerce\Cart\CartLineCoupon;
-use Krokedil\WooCommerce\Interfaces\GiftCardCompatibilityInterface;
-use Krokedil\WooCommerce\KrokedilWooCommerce;
-use Krokedil\WooCommerce\Order\OrderLineCoupon;
+use Krokedil\WooCommerce\Compatibility\Abstracts\AbstractGiftCardCompatibility;
 use Krokedil\WooCommerce\OrderLineData;
 
 /**
  * Class to handle compatibility with YITH Gift Cards.
  */
-class YITHGiftCards implements GiftCardCompatibilityInterface {
-	/**
-	 * The instance of the main package class.
-	 *
-	 * @var KrokedilWooCommerce
-	 */
-	private $package;
-
-	/**
-	 * Initialize the class.
-	 *
-	 * @param KrokedilWooCommerce $package The main package class.
-	 */
-	public function __construct( $package ) {
-		$this->package = $package;
-	}
-
+class YITHGiftCards extends AbstractGiftCardCompatibility {
 	/**
 	 * Get the giftcards applied to the current cart.
 	 *
@@ -41,21 +22,10 @@ class YITHGiftCards implements GiftCardCompatibilityInterface {
 		}
 
 		foreach ( WC()->cart->applied_gift_cards as $code ) {
-			$coupon = new CartLineCoupon( $this->package->config() );
 			$amount = isset( WC()->cart->applied_gift_cards_amounts[ $code ] ) ?
 				WC()->cart->applied_gift_cards_amounts[ $code ] : 0 * -1;
 
-			$coupon->set_name( "Gift card $code" )
-				->set_sku( 'gift_card' )
-				->set_quantity( 1 )
-				->set_unit_price( $amount )
-				->set_subtotal_unit_price( $amount )
-				->set_total_amount( $amount )
-				->set_total_tax_amount( 0 )
-				->set_tax_rate( 0 )
-				->set_type( 'gift_card' );
-
-			$coupons[] = $coupon;
+			$coupons[] = $this->create_gift_card( "$this->name $code", $this->sku, $this->type, $amount );
 		}
 
 		return $coupons;
@@ -78,20 +48,8 @@ class YITHGiftCards implements GiftCardCompatibilityInterface {
 		}
 
 		foreach ( $yith_meta as $code => $amount ) {
-			$amount = $amount * -1;
-			$coupon = new OrderLineCoupon( $this->package->config() );
-
-			$coupon->set_name( "Gift card $code" )
-				->set_sku( 'gift_card' )
-				->set_quantity( 1 )
-				->set_unit_price( $amount )
-				->set_subtotal_unit_price( $amount )
-				->set_total_amount( $amount )
-				->set_total_tax_amount( 0 )
-				->set_tax_rate( 0 )
-				->set_type( 'gift_card' );
-
-			$coupons[] = $coupon;
+			$amount    = $amount * -1;
+			$coupons[] = $this->create_gift_card( "$this->name $code", $this->sku, $this->type, $amount );
 		}
 
 		return $coupons;
