@@ -22,8 +22,8 @@ class YITHGiftCards extends AbstractGiftCardCompatibility {
 		}
 
 		foreach ( WC()->cart->applied_gift_cards as $code ) {
-			$amount = isset( WC()->cart->applied_gift_cards_amounts[ $code ] ) ?
-				WC()->cart->applied_gift_cards_amounts[ $code ] : 0 * -1;
+			$amount = ( isset( WC()->cart->applied_gift_cards_amounts[ $code ] ) ?
+				WC()->cart->applied_gift_cards_amounts[ $code ] : 0 ) * -1;
 
 			$coupons[] = $this->create_gift_card( "$this->name $code", $this->sku, $this->type, $amount );
 		}
