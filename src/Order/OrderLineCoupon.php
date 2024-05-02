@@ -312,7 +312,7 @@ class OrderLineCoupon extends OrderLineData {
 	 * @return self
 	 */
 	public function set_total_tax_amount( $total_tax_amount = null ) {
-		$total_tax_amount       = $total_tax_amount ? $this->format_price( $total_tax_amount ) : $this->discount_tax_amount;
+		$total_tax_amount       = is_numeric( $total_tax_amount ) ? $this->format_price( $total_tax_amount ) : $this->discount_tax_amount;
 		$this->total_tax_amount = apply_filters( $this->get_filter_name( 'total_tax_amount' ), $total_tax_amount, $this->coupon );
 
 		return $this;
