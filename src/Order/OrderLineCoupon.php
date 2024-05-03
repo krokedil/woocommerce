@@ -214,7 +214,7 @@ class OrderLineCoupon extends OrderLineData {
 	 * @return self
 	 */
 	public function set_unit_price( $unit_price = null ) {
-		$unit_price       = $unit_price ? $this->format_price( $unit_price ) : $this->discount_amount;
+		$unit_price       = is_numeric( $unit_price ) ? $this->format_price( $unit_price ) : $this->discount_amount;
 		$this->unit_price = apply_filters( $this->get_filter_name( 'unit_price' ), $unit_price, $this->coupon );
 
 		return $this;
@@ -228,7 +228,7 @@ class OrderLineCoupon extends OrderLineData {
 	 * @return self
 	 */
 	public function set_subtotal_unit_price( $unit_price = null ) {
-		$unit_price                = $unit_price ? $this->format_price( $unit_price ) : $this->discount_amount;
+		$unit_price                = is_numeric( $unit_price ) ? $this->format_price( $unit_price ) : $this->discount_amount;
 		$this->subtotal_unit_price = apply_filters( $this->get_filter_name( 'subtotal_unit_price' ), $unit_price, $this->coupon );
 
 		return $this;
@@ -256,7 +256,7 @@ class OrderLineCoupon extends OrderLineData {
 	 * @return self
 	 */
 	public function set_total_amount( $total_amount = null ) {
-		$total_amount       = $total_amount ? $this->format_price( $total_amount ) : $this->discount_amount;
+		$total_amount       = is_numeric( $total_amount ) ? $this->format_price( $total_amount ) : $this->discount_amount;
 		$this->total_amount = apply_filters( $this->get_filter_name( 'total_amount' ), $total_amount, $this->coupon );
 
 		return $this;
@@ -270,7 +270,7 @@ class OrderLineCoupon extends OrderLineData {
 	 * @return self
 	 */
 	public function set_subtotal_amount( $subtotal_amount = null ) {
-		$subtotal_amount       = $subtotal_amount ? $this->format_price( $subtotal_amount ) : $this->discount_amount;
+		$subtotal_amount       = is_numeric( $subtotal_amount ) ? $this->format_price( $subtotal_amount ) : $this->discount_amount;
 		$this->subtotal_amount = apply_filters( $this->get_filter_name( 'subtotal_amount' ), $subtotal_amount, $this->coupon );
 
 		return $this;
@@ -284,7 +284,7 @@ class OrderLineCoupon extends OrderLineData {
 	 * @return self
 	 */
 	public function set_total_discount_amount( $total_discount_amount = null ) {
-		$total_discount_amount       = $total_discount_amount ? $this->format_price( $total_discount_amount ) : 0;
+		$total_discount_amount       = is_numeric( $total_discount_amount ) ? $this->format_price( $total_discount_amount ) : 0;
 		$this->total_discount_amount = apply_filters( $this->get_filter_name( 'total_discount_amount' ), $total_discount_amount, $this->coupon );
 
 		return $this;
@@ -298,7 +298,7 @@ class OrderLineCoupon extends OrderLineData {
 	 * @return self
 	 */
 	public function set_total_discount_tax_amount( $total_discount_tax_amount = null ) {
-		$total_discount_tax_amount       = $total_discount_tax_amount ? $this->format_price( $total_discount_tax_amount ) : 0;
+		$total_discount_tax_amount       = is_numeric( $total_discount_tax_amount ) ? $this->format_price( $total_discount_tax_amount ) : 0;
 		$this->total_discount_tax_amount = apply_filters( $this->get_filter_name( 'total_discount_tax_amount' ), $total_discount_tax_amount, $this->coupon );
 
 		return $this;
@@ -326,7 +326,7 @@ class OrderLineCoupon extends OrderLineData {
 	 * @return self
 	 */
 	public function set_subtotal_tax_amount( $subtotal_tax_amount = null ) {
-		$subtotal_tax_amount       = $subtotal_tax_amount ? $this->format_price( $subtotal_tax_amount ) : $this->discount_tax_amount;
+		$subtotal_tax_amount       = is_numeric( $subtotal_tax_amount ) ? $this->format_price( $subtotal_tax_amount ) : $this->discount_tax_amount;
 		$this->subtotal_tax_amount = apply_filters( $this->get_filter_name( 'subtotal_tax_amount' ), $subtotal_tax_amount, $this->coupon );
 
 		return $this;
@@ -377,7 +377,7 @@ class OrderLineCoupon extends OrderLineData {
 	}
 
 	/**
-	 * Function to set product compatability
+	 * Function to set product compatibility
 	 *
 	 * @return self
 	 */
