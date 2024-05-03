@@ -27,7 +27,7 @@ class OrderLineItem extends OrderLine {
 	 * Constructor.
 	 *
 	 * @param \WC_Order_Item_Product $order_line_item The order line item.
-	 * @param array $config Configuration array.
+	 * @param array                  $config Configuration array.
 	 */
 	public function __construct( $order_line_item, $config = array() ) {
 		$this->product = $order_line_item->get_product();
@@ -46,6 +46,7 @@ class OrderLineItem extends OrderLine {
 
 	/**
 	 * Abstract function to set product sku
+	 *
 	 * @return void
 	 */
 	public function set_sku() {
@@ -60,12 +61,12 @@ class OrderLineItem extends OrderLine {
 			}
 		}
 
-
 		$this->sku = apply_filters( $this->get_filter_name( 'sku' ), $item_reference, $this->order_line_item );
 	}
 
 	/**
 	 * Abstract function to set product total discount amount
+	 *
 	 * @return void
 	 */
 	public function set_total_discount_amount() {
@@ -74,6 +75,7 @@ class OrderLineItem extends OrderLine {
 
 	/**
 	 * Abstract function to set product total discount tax amount
+	 *
 	 * @return void
 	 */
 	public function set_total_discount_tax_amount() {
@@ -100,6 +102,7 @@ class OrderLineItem extends OrderLine {
 
 	/**
 	 * Abstract function to set product type
+	 *
 	 * @return void
 	 */
 	public function set_type() {
@@ -108,6 +111,7 @@ class OrderLineItem extends OrderLine {
 
 	/**
 	 * Abstract function to set product url
+	 *
 	 * @return void
 	 */
 	public function set_product_url() {
@@ -116,6 +120,7 @@ class OrderLineItem extends OrderLine {
 
 	/**
 	 * Abstract function to set product image url
+	 *
 	 * @return void
 	 */
 	public function set_image_url() {

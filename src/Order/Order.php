@@ -125,7 +125,7 @@ class Order extends OrderData {
 			}
 		}
 
-		// PW Giftcards
+		// PW Giftcards.
 		if ( isset( WC()->session ) && ! empty( WC()->session->get( 'pw-gift-card-data' ) ) ) {
 			$pw_gift_card_data = WC()->session->get( 'pw-gift-card-data' );
 			foreach ( $pw_gift_card_data['gift_cards'] as $code => $value ) {
@@ -159,7 +159,7 @@ class Order extends OrderData {
 	 * @return void
 	 */
 	public function set_line_compatibility() {
-		// TODO - Compatibility
+		// TODO - Compatibility.
 	}
 
 	/**
