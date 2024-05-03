@@ -211,11 +211,11 @@ class CartLineShipping extends OrderLineData {
 	}
 
 	/**
-	 * Abstract function to set product compatability
+	 * Abstract function to set product compatibility
 	 *
 	 * @return void
 	 */
 	public function set_compatibility() {
-		$this->compatability = apply_filters( $this->get_filter_name( 'compatability' ), array(), $this->shipping_rate );
+		$this->compatibility = apply_filters( $this->get_filter_name( 'compatibility' ), array(), $this->shipping_rate );
 	}
 }

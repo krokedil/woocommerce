@@ -381,12 +381,12 @@ class CartLineCoupon extends OrderLineData {
 	}
 
 	/**
-	 * Function to set product compatability
+	 * Function to set product compatibility
 	 *
 	 * @return self
 	 */
 	public function set_compatibility() {
-		$this->compatability = apply_filters( $this->get_filter_name( 'compatability' ), array(), $this->coupon );
+		$this->compatibility = apply_filters( $this->get_filter_name( 'compatibility' ), array(), $this->coupon );
 
 		return $this;
 	}

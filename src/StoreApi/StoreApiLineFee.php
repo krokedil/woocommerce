@@ -221,11 +221,11 @@ class StoreApiLineFee extends OrderLineData {
 	}
 
 	/**
-	 * Function to set product compatability
+	 * Function to set product compatibility
 	 *
 	 * @return void
 	 */
 	public function set_compatibility() {
-		$this->compatability = apply_filters( $this->get_filter_name( 'compatability' ), array(), $this->cart_fee );
+		$this->compatibility = apply_filters( $this->get_filter_name( 'compatibility' ), array(), $this->cart_fee );
 	}
 }

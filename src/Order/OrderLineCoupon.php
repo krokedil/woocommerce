@@ -382,7 +382,7 @@ class OrderLineCoupon extends OrderLineData {
 	 * @return self
 	 */
 	public function set_compatibility() {
-		$this->compatability = apply_filters( $this->get_filter_name( 'compatability' ), array(), $this->coupon );
+		$this->compatibility = apply_filters( $this->get_filter_name( 'compatibility' ), array(), $this->coupon );
 
 		return $this;
 	}

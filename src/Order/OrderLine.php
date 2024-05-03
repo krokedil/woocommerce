@@ -165,11 +165,11 @@ abstract class OrderLine extends OrderLineData {
 	}
 
 	/**
-	 * Abstract function to set product compatability
+	 * Abstract function to set product compatibility
 	 *
 	 * @return void
 	 */
 	public function set_compatibility() {
-		$this->compatability = apply_filters( $this->get_filter_name( 'compatability' ), array(), $this->order_line_item );
+		$this->compatibility = apply_filters( $this->get_filter_name( 'compatibility' ), array(), $this->order_line_item );
 	}
 }
