@@ -19,7 +19,7 @@ class OrderLineCoupon extends OrderLineData {
 	/**
 	 * WooCommerce order item coupon.
 	 *
-	 * @var WC_Order_Item_Coupon
+	 * @var \WC_Order_Item_Coupon
 	 */
 	public $coupon;
 
@@ -40,7 +40,8 @@ class OrderLineCoupon extends OrderLineData {
 	/**
 	 * Sets the data for the order line coupon.
 	 *
-	 * @param WC_Order_Item_Coupon $coupon
+	 * @param \WC_Order_Item_Coupon $coupon The WooCommerce coupon.
+	 *
 	 * @return void
 	 */
 	public function set_coupon_data( $coupon ) {
@@ -64,13 +65,13 @@ class OrderLineCoupon extends OrderLineData {
 		$this->set_type();
 		$this->set_product_url();
 		$this->set_image_url();
-		$this->set_compatability();
+		$this->set_compatibility();
 	}
 
 	/**
 	 * Set coupon data from Smart coupons.
 	 *
-	 * @param WC_Order_Item_Coupon $coupon The WooCommerce coupon
+	 * @param \WC_Order_Item_Coupon $coupon The WooCommerce coupon.
 	 *
 	 * @return void
 	 */
@@ -94,7 +95,7 @@ class OrderLineCoupon extends OrderLineData {
 	/**
 	 * Set the data from WC_Gift_Card plugin.
 	 *
-	 * @param WC_GC_Order_Item_Gift_Card $wc_gift_card WC Giftcard.
+	 * @param \WC_GC_Order_Item_Gift_Card $wc_gift_card WC Giftcard.
 	 *
 	 * @return void
 	 */
@@ -118,7 +119,7 @@ class OrderLineCoupon extends OrderLineData {
 	/**
 	 * Set the data from the YITH WooCommerce Gift Cards plugin.
 	 *
-	 * @param string $code YITH Giftcard code.
+	 * @param string           $code YITH Giftcard code.
 	 * @param string|int|float $amount YITH Giftcard amount.
 	 *
 	 * @return void
@@ -165,131 +166,224 @@ class OrderLineCoupon extends OrderLineData {
 
 	/**
 	 * Function to set product name
-	 * @return void
+	 *
+	 * @param string $name Name.
+	 *
+	 * @return self
 	 */
-	public function set_name() {
-		$this->name = apply_filters( $this->get_filter_name( 'name' ), $this->coupon->get_code(), $this->coupon );
+	public function set_name( $name = null ) {
+		$name       = $name ?? $this->coupon->get_code();
+		$this->name = apply_filters( $this->get_filter_name( 'name' ), $name, $this->coupon );
+
+		return $this;
 	}
 
 	/**
 	 * Function to set product sku
-	 * @return void
+	 *
+	 * @param string $sku SKU.
+	 *
+	 * @return self
 	 */
-	public function set_sku() {
-		$this->sku = apply_filters( $this->get_filter_name( 'sku' ), $this->coupon->get_code(), $this->coupon );
+	public function set_sku( $sku = null ) {
+		$sku       = $sku ?? $this->coupon->get_code();
+		$this->sku = apply_filters( $this->get_filter_name( 'sku' ), $sku, $this->coupon );
+
+		return $this;
 	}
 
 	/**
 	 * Function to set product quantity
-	 * @return void
+	 *
+	 * @param int $quantity Quantity.
+	 *
+	 * @return self
 	 */
-	public function set_quantity() {
-		$this->quantity = apply_filters( $this->get_filter_name( 'quantity' ), 1, $this->coupon );
+	public function set_quantity( $quantity = null ) {
+		$quantity       = $quantity ?? 1;
+		$this->quantity = apply_filters( $this->get_filter_name( 'quantity' ), $quantity, $this->coupon );
+
+		return $this;
 	}
 
 	/**
 	 * Function to set product unit price
-	 * @return void
+	 *
+	 * @param float|int $unit_price Unit price.
+	 *
+	 * @return self
 	 */
-	public function set_unit_price() {
-		$this->unit_price = apply_filters( $this->get_filter_name( 'unit_price' ), $this->discount_amount, $this->coupon );
+	public function set_unit_price( $unit_price = null ) {
+		$unit_price       = is_numeric( $unit_price ) ? $this->format_price( $unit_price ) : $this->discount_amount;
+		$this->unit_price = apply_filters( $this->get_filter_name( 'unit_price' ), $unit_price, $this->coupon );
+
+		return $this;
 	}
 
 	/**
 	 * Function to set product subtotal unit price
-	 * @return void
+	 *
+	 * @param float|int $unit_price Subtotal unit price.
+	 *
+	 * @return self
 	 */
-	public function set_subtotal_unit_price() {
-		$this->subtotal_unit_price = apply_filters( $this->get_filter_name( 'subtotal_unit_price' ), $this->discount_amount, $this->coupon );
+	public function set_subtotal_unit_price( $unit_price = null ) {
+		$unit_price                = is_numeric( $unit_price ) ? $this->format_price( $unit_price ) : $this->discount_amount;
+		$this->subtotal_unit_price = apply_filters( $this->get_filter_name( 'subtotal_unit_price' ), $unit_price, $this->coupon );
+
+		return $this;
 	}
 
 	/**
 	 * Function to set product tax rate
-	 * @return void
+	 *
+	 * @param float|int $tax_rate Tax rate.
+	 *
+	 * @return self
 	 */
-	public function set_tax_rate() {
-		$this->tax_rate = apply_filters( $this->get_filter_name( 'tax_rate' ), 0, $this->coupon );
+	public function set_tax_rate( $tax_rate = null ) {
+		$tax_rate       = $tax_rate ?? 0;
+		$this->tax_rate = apply_filters( $this->get_filter_name( 'tax_rate' ), $tax_rate, $this->coupon );
+
+		return $this;
 	}
 
 	/**
 	 * Function to set product total amount
-	 * @return void
+	 *
+	 * @param float|int $total_amount Total amount.
+	 *
+	 * @return self
 	 */
-	public function set_total_amount() {
-		$this->total_amount = apply_filters( $this->get_filter_name( 'total_amount' ), $this->discount_amount, $this->coupon );
+	public function set_total_amount( $total_amount = null ) {
+		$total_amount       = is_numeric( $total_amount ) ? $this->format_price( $total_amount ) : $this->discount_amount;
+		$this->total_amount = apply_filters( $this->get_filter_name( 'total_amount' ), $total_amount, $this->coupon );
+
+		return $this;
 	}
 
 	/**
 	 * Function to set product subtotal amount
-	 * @return void
+	 *
+	 * @param float|int $subtotal_amount Subtotal amount.
+	 *
+	 * @return self
 	 */
-	public function set_subtotal_amount() {
-		$this->subtotal_amount = apply_filters( $this->get_filter_name( 'subtotal_amount' ), $this->discount_amount, $this->coupon );
+	public function set_subtotal_amount( $subtotal_amount = null ) {
+		$subtotal_amount       = is_numeric( $subtotal_amount ) ? $this->format_price( $subtotal_amount ) : $this->discount_amount;
+		$this->subtotal_amount = apply_filters( $this->get_filter_name( 'subtotal_amount' ), $subtotal_amount, $this->coupon );
+
+		return $this;
 	}
 
 	/**
 	 * Function to set product total discount amount
-	 * @return void
+	 *
+	 * @param float|int $total_discount_amount Total discount amount.
+	 *
+	 * @return self
 	 */
-	public function set_total_discount_amount() {
-		$this->total_discount_amount = apply_filters( $this->get_filter_name( 'total_discount_amount' ), 0, $this->coupon );
+	public function set_total_discount_amount( $total_discount_amount = null ) {
+		$total_discount_amount       = is_numeric( $total_discount_amount ) ? $this->format_price( $total_discount_amount ) : 0;
+		$this->total_discount_amount = apply_filters( $this->get_filter_name( 'total_discount_amount' ), $total_discount_amount, $this->coupon );
+
+		return $this;
 	}
 
 	/**
 	 * Abstract function to set product total discount tax amount
-	 * @return void
+	 *
+	 * @param float|int $total_discount_tax_amount Total discount tax amount.
+	 *
+	 * @return self
 	 */
-	public function set_total_discount_tax_amount() {
-		$this->total_discount_tax_amount = apply_filters( $this->get_filter_name( 'tota_discount_tax_amount' ), 0, $this->coupon );
+	public function set_total_discount_tax_amount( $total_discount_tax_amount = null ) {
+		$total_discount_tax_amount       = is_numeric( $total_discount_tax_amount ) ? $this->format_price( $total_discount_tax_amount ) : 0;
+		$this->total_discount_tax_amount = apply_filters( $this->get_filter_name( 'total_discount_tax_amount' ), $total_discount_tax_amount, $this->coupon );
+
+		return $this;
 	}
 
 	/**
 	 * Function to set product total tax amount
-	 * @return void
+	 *
+	 * @param float|int $total_tax_amount Total tax amount.
+	 *
+	 * @return self
 	 */
-	public function set_total_tax_amount() {
-		$this->total_tax_amount = apply_filters( $this->get_filter_name( 'total_tax_amount' ), $this->discount_tax_amount, $this->coupon );
+	public function set_total_tax_amount( $total_tax_amount = null ) {
+		$total_tax_amount       = is_numeric( $total_tax_amount ) ? $this->format_price( $total_tax_amount ) : $this->discount_tax_amount;
+		$this->total_tax_amount = apply_filters( $this->get_filter_name( 'total_tax_amount' ), $total_tax_amount, $this->coupon );
+
+		return $this;
 	}
 
 	/**
 	 * Function to set product subtotal tax amount
-	 * @return void
+	 *
+	 * @param float|int $subtotal_tax_amount Subtotal tax amount.
+	 *
+	 * @return self
 	 */
-	public function set_subtotal_tax_amount() {
-		$this->subtotal_tax_amount = apply_filters( $this->get_filter_name( 'subtotal_tax_amount' ), $this->discount_tax_amount, $this->coupon );
+	public function set_subtotal_tax_amount( $subtotal_tax_amount = null ) {
+		$subtotal_tax_amount       = is_numeric( $subtotal_tax_amount ) ? $this->format_price( $subtotal_tax_amount ) : $this->discount_tax_amount;
+		$this->subtotal_tax_amount = apply_filters( $this->get_filter_name( 'subtotal_tax_amount' ), $subtotal_tax_amount, $this->coupon );
+
+		return $this;
 	}
 
 	/**
 	 * Function to set product type
-	 * @return void
+	 *
+	 * @param string $type Type of product.
+	 *
+	 * @return self
 	 */
-	public function set_type() {
-		$meta_data  = $this->coupon->get_meta( 'coupon_data', true );
-		$type       = isset( $meta_data['discount_type'] ) ? $meta_data['discount_type'] : 'fixed_cart';
+	public function set_type( $type = null ) {
+		if ( ! $type ) {
+			$meta_data = $this->coupon->get_meta( 'coupon_data', true );
+			$type      = isset( $meta_data['discount_type'] ) ? $meta_data['discount_type'] : 'fixed_cart';
+		}
+
 		$this->type = apply_filters( $this->get_filter_name( 'type' ), $type, $this->coupon );
+
+		return $this;
 	}
 
 	/**
 	 * Function to set product url
-	 * @return void
+	 *
+	 * @param string $product_url Product url.
+	 *
+	 * @return self
 	 */
-	public function set_product_url() {
-		$this->product_url = apply_filters( $this->get_filter_name( 'product_url' ), null, $this->coupon );
+	public function set_product_url( $product_url = null ) {
+		$this->product_url = apply_filters( $this->get_filter_name( 'product_url' ), $product_url, $this->coupon );
+
+		return $this;
 	}
 
 	/**
 	 * Function to set product image url
-	 * @return void
+	 *
+	 * @param string $image_url Image url.
+	 *
+	 * @return self
 	 */
-	public function set_image_url() {
-		$this->image_url = apply_filters( $this->get_filter_name( 'image_url' ), null, $this->coupon );
+	public function set_image_url( $image_url = null ) {
+		$this->image_url = apply_filters( $this->get_filter_name( 'image_url' ), $image_url, $this->coupon );
+
+		return $this;
 	}
 
 	/**
-	 * Function to set product compatability
-	 * @return void
+	 * Function to set product compatibility
+	 *
+	 * @return self
 	 */
-	public function set_compatability() {
-		$this->compatability = apply_filters( $this->get_filter_name( 'compatability' ), array(), $this->coupon );
+	public function set_compatibility() {
+		$this->compatibility = apply_filters( $this->get_filter_name( 'compatibility' ), array(), $this->coupon );
+
+		return $this;
 	}
 }

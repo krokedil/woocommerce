@@ -30,7 +30,7 @@ class CartLineFee extends OrderLineData {
 	 * Constructor.
 	 *
 	 * @param object $cart_fee The WooCommerce cart fee.
-	 * @param array $config Configuration array.
+	 * @param array  $config Configuration array.
 	 */
 	public function __construct( $cart_fee, $config = array() ) {
 		parent::__construct( $config );
@@ -52,11 +52,12 @@ class CartLineFee extends OrderLineData {
 		$this->set_type();
 		$this->set_product_url();
 		$this->set_image_url();
-		$this->set_compatability();
+		$this->set_compatibility();
 	}
 
 	/**
 	 * Function to set product name
+	 *
 	 * @return void
 	 */
 	public function set_name() {
@@ -67,6 +68,7 @@ class CartLineFee extends OrderLineData {
 
 	/**
 	 * Function to set product sku
+	 *
 	 * @return void
 	 */
 	public function set_sku() {
@@ -77,6 +79,7 @@ class CartLineFee extends OrderLineData {
 
 	/**
 	 * Function to set product quantity
+	 *
 	 * @return void
 	 */
 	public function set_quantity() {
@@ -85,6 +88,7 @@ class CartLineFee extends OrderLineData {
 
 	/**
 	 * Function to set product unit price
+	 *
 	 * @return void
 	 */
 	public function set_unit_price() {
@@ -95,6 +99,7 @@ class CartLineFee extends OrderLineData {
 
 	/**
 	 * Function to set product subtotal unit price
+	 *
 	 * @return void
 	 */
 	public function set_subtotal_unit_price() {
@@ -105,6 +110,7 @@ class CartLineFee extends OrderLineData {
 
 	/**
 	 * Function to set product tax rate
+	 *
 	 * @return void
 	 */
 	public function set_tax_rate() {
@@ -124,6 +130,7 @@ class CartLineFee extends OrderLineData {
 
 	/**
 	 * Function to set product total amount
+	 *
 	 * @return void
 	 */
 	public function set_total_amount() {
@@ -132,6 +139,7 @@ class CartLineFee extends OrderLineData {
 
 	/**
 	 * Function to set product subtotal amount
+	 *
 	 * @return void
 	 */
 	public function set_subtotal_amount() {
@@ -140,6 +148,7 @@ class CartLineFee extends OrderLineData {
 
 	/**
 	 * Function to set product total discount amount
+	 *
 	 * @return void
 	 */
 	public function set_total_discount_amount() {
@@ -150,6 +159,7 @@ class CartLineFee extends OrderLineData {
 
 	/**
 	 * Abstract function to set product total discount tax amount
+	 *
 	 * @return void
 	 */
 	public function set_total_discount_tax_amount() {
@@ -160,6 +170,7 @@ class CartLineFee extends OrderLineData {
 
 	/**
 	 * Function to set product total tax amount
+	 *
 	 * @return void
 	 */
 	public function set_total_tax_amount() {
@@ -168,6 +179,7 @@ class CartLineFee extends OrderLineData {
 
 	/**
 	 * Function to set product subtotal tax amount
+	 *
 	 * @return void
 	 */
 	public function set_subtotal_tax_amount() {
@@ -176,6 +188,7 @@ class CartLineFee extends OrderLineData {
 
 	/**
 	 * Function to set product type
+	 *
 	 * @return void
 	 */
 	public function set_type() {
@@ -184,6 +197,7 @@ class CartLineFee extends OrderLineData {
 
 	/**
 	 * Function to set product url
+	 *
 	 * @return void
 	 */
 	public function set_product_url() {
@@ -194,6 +208,7 @@ class CartLineFee extends OrderLineData {
 
 	/**
 	 * Function to set product image url
+	 *
 	 * @return void
 	 */
 	public function set_image_url() {
@@ -203,10 +218,11 @@ class CartLineFee extends OrderLineData {
 	}
 
 	/**
-	 * Function to set product compatability
+	 * Function to set product compatibility
+	 *
 	 * @return void
 	 */
-	public function set_compatability() {
-		$this->compatability = apply_filters( $this->get_filter_name( 'compatability' ), array(), $this->cart_fee );
+	public function set_compatibility() {
+		$this->compatibility = apply_filters( $this->get_filter_name( 'compatibility' ), array(), $this->cart_fee );
 	}
 }
