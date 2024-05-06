@@ -34,8 +34,14 @@ class SmartCoupons extends AbstractGiftCardCompatibility {
 				continue;
 			}
 
-			$amount = WC()->cart->get_coupon_discount_amount( $code ) * -1;
-			$sku    = substr( strval( $code ), 0, 64 );
+			$apply_before_tax = 'yes' === get_option( 'woocommerce_smart_coupon_apply_before_tax', 'no' );
+			if ( wc_tax_enabled() && $apply_before_tax ) {
+				// The discount is applied directly to the cart item. Send gift card amount as zero for bookkeeping.
+				$amount = 0;
+			} else {
+				$amount = -1 * ( WC()->cart->get_coupon_discount_amount( $code ) + WC()->cart->get_coupon_discount_tax_amount( $code ) );
+			}
+			$sku = substr( strval( $code ), 0, 64 );
 
 			$coupons[] = $this->create_gift_card( "$this->name $code", $sku, $this->type, $amount );
 		}
@@ -65,9 +71,16 @@ class SmartCoupons extends AbstractGiftCardCompatibility {
 				continue;
 			}
 
-			$code   = $order_coupon->get_code();
-			$amount = $order_coupon->get_discount() * -1;
-			$sku    = substr( strval( $code ), 0, 64 );
+			$apply_before_tax = 'yes' === get_option( 'woocommerce_smart_coupon_apply_before_tax', 'no' );
+			if ( wc_tax_enabled() && $apply_before_tax ) {
+				// The discount is applied directly to the order item. Send gift card amount as zero for bookkeeping.
+				$amount = 0;
+			} else {
+				$amount = -1 * ( $order_coupon->get_discount() + $order_coupon->get_discount_tax() );
+			}
+
+			$code = $order_coupon->get_code();
+			$sku  = substr( strval( $code ), 0, 64 );
 
 			$coupons[] = $this->create_gift_card( "$this->name $code", $sku, $this->type, $amount );
 		}
