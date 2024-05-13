@@ -123,7 +123,7 @@ abstract class OrderLineData extends Base {
 	 *
 	 * @var array
 	 */
-	public $compatability;
+	public $compatibility;
 
 	/**
 	 * Abstract function to set product name
@@ -231,11 +231,11 @@ abstract class OrderLineData extends Base {
 	abstract public function set_image_url();
 
 	/**
-	 * Abstract function to set product compatability
+	 * Abstract function to set product compatibility
 	 *
 	 * @return void
 	 */
-	abstract public function set_compatability();
+	abstract public function set_compatibility();
 
 	/**
 	 * Function to get product name
@@ -400,11 +400,11 @@ abstract class OrderLineData extends Base {
 	}
 
 	/**
-	 * Function to get product compatability
+	 * Function to get product compatibility
 	 *
 	 * @return array
 	 */
-	public function get_compatability() {
-		return $this->compatability;
+	public function get_compatibility() {
+		return $this->compatibility;
 	}
 }

@@ -64,7 +64,7 @@ class CartLineItem extends OrderLineData {
 		$this->set_type();
 		$this->set_product_url();
 		$this->set_image_url();
-		$this->set_compatability();
+		$this->set_compatibility();
 	}
 
 	/**
@@ -248,11 +248,11 @@ class CartLineItem extends OrderLineData {
 	}
 
 	/**
-	 * Function to set product compatability
+	 * Function to set product compatibility
 	 *
 	 * @return void
 	 */
-	public function set_compatability() {
-		$this->compatability = apply_filters( $this->get_filter_name( 'compatability' ), array(), $this->cart_item );
+	public function set_compatibility() {
+		$this->compatibility = apply_filters( $this->get_filter_name( 'compatibility' ), array(), $this->cart_item );
 	}
 }

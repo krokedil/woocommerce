@@ -53,7 +53,7 @@ class CartLineShipping extends OrderLineData {
 		$this->set_type();
 		$this->set_product_url();
 		$this->set_image_url();
-		$this->set_compatability();
+		$this->set_compatibility();
 	}
 
 	/**
@@ -211,11 +211,11 @@ class CartLineShipping extends OrderLineData {
 	}
 
 	/**
-	 * Abstract function to set product compatability
+	 * Abstract function to set product compatibility
 	 *
 	 * @return void
 	 */
-	public function set_compatability() {
-		$this->compatability = apply_filters( $this->get_filter_name( 'compatability' ), array(), $this->shipping_rate );
+	public function set_compatibility() {
+		$this->compatibility = apply_filters( $this->get_filter_name( 'compatibility' ), array(), $this->shipping_rate );
 	}
 }

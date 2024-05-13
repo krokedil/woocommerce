@@ -53,11 +53,12 @@ class StoreApiLineShipping extends OrderLineData {
 		$this->set_type();
 		$this->set_product_url();
 		$this->set_image_url();
-		$this->set_compatability();
+		$this->set_compatibility();
 	}
 
 	/**
 	 * Abstract function to set product name
+	 *
 	 * @return void
 	 */
 	public function set_name() {
@@ -66,6 +67,7 @@ class StoreApiLineShipping extends OrderLineData {
 
 	/**
 	 * Abstract function to set product sku
+	 *
 	 * @return void
 	 */
 	public function set_sku() {
@@ -74,6 +76,7 @@ class StoreApiLineShipping extends OrderLineData {
 
 	/**
 	 * Abstract function to set product quantity
+	 *
 	 * @return void
 	 */
 	public function set_quantity() {
@@ -82,6 +85,7 @@ class StoreApiLineShipping extends OrderLineData {
 
 	/**
 	 * Abstract function to set product unit price
+	 *
 	 * @return void
 	 */
 	public function set_unit_price() {
@@ -90,6 +94,7 @@ class StoreApiLineShipping extends OrderLineData {
 
 	/**
 	 * Abstract function to set product subtotal unit price
+	 *
 	 * @return void
 	 */
 	public function set_subtotal_unit_price() {
@@ -98,6 +103,7 @@ class StoreApiLineShipping extends OrderLineData {
 
 	/**
 	 * Abstract function to set product tax rate
+	 *
 	 * @return void
 	 */
 	public function set_tax_rate() {
@@ -116,6 +122,7 @@ class StoreApiLineShipping extends OrderLineData {
 
 	/**
 	 * Abstract function to set product total amount
+	 *
 	 * @return void
 	 */
 	public function set_total_amount() {
@@ -124,6 +131,7 @@ class StoreApiLineShipping extends OrderLineData {
 
 	/**
 	 * Abstract function to set product subtotal amount
+	 *
 	 * @return void
 	 */
 	public function set_subtotal_amount() {
@@ -132,6 +140,7 @@ class StoreApiLineShipping extends OrderLineData {
 
 	/**
 	 * Abstract function to set product total discount amount
+	 *
 	 * @return void
 	 */
 	public function set_total_discount_amount() {
@@ -140,6 +149,7 @@ class StoreApiLineShipping extends OrderLineData {
 
 	/**
 	 * Abstract function to set product total discount tax amount
+	 *
 	 * @return void
 	 */
 	public function set_total_discount_tax_amount() {
@@ -148,6 +158,7 @@ class StoreApiLineShipping extends OrderLineData {
 
 	/**
 	 * Abstract function to set product total tax amount
+	 *
 	 * @return void
 	 */
 	public function set_total_tax_amount() {
@@ -156,6 +167,7 @@ class StoreApiLineShipping extends OrderLineData {
 
 	/**
 	 * Abstract function to set product subtotal tax amount
+	 *
 	 * @return void
 	 */
 	public function set_subtotal_tax_amount() {
@@ -164,6 +176,7 @@ class StoreApiLineShipping extends OrderLineData {
 
 	/**
 	 * Abstract function to set product type
+	 *
 	 * @return void
 	 */
 	public function set_type() {
@@ -172,6 +185,7 @@ class StoreApiLineShipping extends OrderLineData {
 
 	/**
 	 * Abstract function to set product url
+	 *
 	 * @return void
 	 */
 	public function set_product_url() {
@@ -180,6 +194,7 @@ class StoreApiLineShipping extends OrderLineData {
 
 	/**
 	 * Abstract function to set product image url
+	 *
 	 * @return void
 	 */
 	public function set_image_url() {
@@ -187,10 +202,11 @@ class StoreApiLineShipping extends OrderLineData {
 	}
 
 	/**
-	 * Abstract function to set product compatability
+	 * Abstract function to set product compatibility
+	 *
 	 * @return void
 	 */
-	public function set_compatability() {
-		$this->compatability = apply_filters( $this->get_filter_name( 'compatability' ), array(), $this->shipping_rate );
+	public function set_compatibility() {
+		$this->compatibility = apply_filters( $this->get_filter_name( 'compatibility' ), array(), $this->shipping_rate );
 	}
 }
