@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ------------------
+## [1.6.0] - 2024-05-13
+### Added
+* Added support for "Gift Cards" by Woo.
+* Added support for "PW WooCommerce Gift Cards" by Pimwick.
+* Added support for "YITH WooCommerce Gift Cards" by YITH.
+* Added support for "WooCommerce Smart Coupons" by StoreApps.
 
 ## [1.5.0] - 2024-03-12
 ### Added
