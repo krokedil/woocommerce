@@ -20,7 +20,7 @@ class CartLineCoupon extends OrderLineData {
 	/**
 	 * WooCommerce Coupon data.
 	 *
-	 * @var WC_Coupon
+	 * @var \WC_Coupon
 	 */
 	public $coupon;
 
@@ -250,7 +250,6 @@ class CartLineCoupon extends OrderLineData {
 	 * @return self
 	 */
 	public function set_tax_rate( $tax_rate = null ) {
-		$tax_rate       = $tax_rate ?? $this->coupon->get_discount_tax_rate();
 		$this->tax_rate = apply_filters( $this->get_filter_name( 'tax_rate' ), 0, $this->coupon );
 
 		return $this;
