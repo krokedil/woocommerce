@@ -143,7 +143,7 @@ abstract class OrderMetabox implements MetaboxInterface {
 	 *
 	 * @return void
 	 */
-	private static function output_error( $message ) {
+	protected static function output_error( $message ) {
 		?>
 		<p class="krokedil_metabox krokedil_metabox__error">
 			<?php echo esc_html( $message ); ?>
@@ -159,7 +159,7 @@ abstract class OrderMetabox implements MetaboxInterface {
 	 *
 	 * @return void
 	 */
-	private static function output_info( $label, $text ) {
+	protected static function output_info( $label, $text ) {
 		?>
 		<p class="krokedil_metabox">
 			<strong><?php echo esc_html( $label ); ?>:</strong>
