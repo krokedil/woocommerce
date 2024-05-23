@@ -167,4 +167,49 @@ abstract class OrderMetabox implements MetaboxInterface {
 		</p>
 		<?php
 	}
+
+	/**
+	 * Output an action button.
+	 *
+	 * @param string $text The text to display on the button.
+	 * @param string $url The URL to link to.
+	 * @param bool   $new_tab Whether to open the link in a new tab.
+	 * @param string $classes The class to add to the button.
+	 *
+	 * @return void
+	 */
+	protected static function output_action_button( $text, $url, $new_tab = false, $classes = '' ) {
+		$target  = $new_tab ? 'target="_blank"' : '';
+		$classes = trim( "button $classes" );
+
+		?>
+		<a href="<?php echo esc_url( $url ); ?>" class="<?php echo esc_attr( $classes ); ?>" <?php echo esc_url( $target ); ?>>
+			<?php echo esc_html( $text ); ?>
+		</a>
+		<?php
+	}
+
+	/**
+	 * Output a button.
+	 *
+	 * @param string $text The text to display on the button.
+	 * @param string $classes The class to add to the button.
+	 * @param array  $data The data attributes to add to the button.
+	 *
+	 * @return void
+	 */
+	protected static function output_button( $text, $classes = '', $data = array() ) {
+		$classes = trim( "button $classes" );
+
+		$data_attributes = '';
+		foreach ( $data as $key => $value ) {
+			$data_attributes .= " data-$key=\"$value\"";
+		}
+
+		?>
+		<button type="button" class="<?php echo esc_attr( $classes ); ?>"<?php echo esc_attr( $data_attributes ); ?>>
+			<?php echo esc_html( $text ); ?>
+		</button>
+		<?php
+	}
 }
