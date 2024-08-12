@@ -99,9 +99,9 @@ abstract class OrderLine extends OrderLineData {
 
 					// If the tax rate cannot be retrieved by using the tax id, use the tax amount to manually calculate the tax rate. NOTE: Avatax tax id cannot be retrieved from WC_Tax.
 					if ( empty( $tax_rate ) ) {
+						$total            = floatval( $this->order_line_item->get_total() );
 						$total_tax_amount = array_sum( array_values( $taxes['total'] ) ) * 100;
-						$tax_rate         = $this->order_line_item->get_total() === 0 ? 0 : $total_tax_amount / $this->order_line_item->get_total() * 100;
-
+						$tax_rate         = 0.0 === $total ? 0 : ( $total_tax_amount / $total ) * 100;
 					}
 				}
 			}
