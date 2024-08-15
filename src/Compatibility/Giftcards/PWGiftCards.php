@@ -14,9 +14,13 @@ class PWGiftCards extends AbstractGiftCardCompatibility {
 	 * @return OrderLineData[]
 	 */
 	public function get_cart_giftcards() {
-		$coupons = array();
+		$coupons           = array();
+		$pw_gift_card_data = WC()->session->get( 'pw-gift-card-data', array() );
 
-		$pw_gift_card_data = WC()->session->get( 'pw-gift-card-data' );
+		if ( ! isset( $pw_gift_card_data['gift_cards'] ) ) {
+			return $coupons;
+		}
+
 		foreach ( $pw_gift_card_data['gift_cards'] as $code => $value ) {
 			$amount    = $value * -1;
 			$coupons[] = $this->create_gift_card( "$this->name $code", $this->sku, $this->type, $amount );
