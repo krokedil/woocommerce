@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ------------------
+## [1.6.2] - 2024-08-28
+### Fixed
+* Fixed a critical error when retrieving PW gift card from a Woo order.
+* Fixed a division by zero when calculating the tax rate.
+* Fixed an undefined index warning by ensuring that PW gift card exists before attempting retrieval.
+
 ## [1.6.1] - 2024-05-13
 ### Fixed
 * Reference to undefined method causes a fatal error.

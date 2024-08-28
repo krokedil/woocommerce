@@ -14,9 +14,13 @@ class PWGiftCards extends AbstractGiftCardCompatibility {
 	 * @return OrderLineData[]
 	 */
 	public function get_cart_giftcards() {
-		$coupons = array();
+		$coupons           = array();
+		$pw_gift_card_data = WC()->session->get( 'pw-gift-card-data', array() );
 
-		$pw_gift_card_data = WC()->session->get( 'pw-gift-card-data' );
+		if ( ! isset( $pw_gift_card_data['gift_cards'] ) ) {
+			return $coupons;
+		}
+
 		foreach ( $pw_gift_card_data['gift_cards'] as $code => $value ) {
 			$amount    = $value * -1;
 			$coupons[] = $this->create_gift_card( "$this->name $code", $this->sku, $this->type, $amount );
@@ -35,10 +39,10 @@ class PWGiftCards extends AbstractGiftCardCompatibility {
 	public function get_order_giftcards( $order ) {
 		$coupons = array();
 
-		$pw_gift_card_data = WC()->session->get( 'pw-gift-card-data' );
-		foreach ( $pw_gift_card_data['gift_cards'] as $code => $value ) {
-			$amount    = $value * -1;
-			$coupons[] = $this->create_gift_card( "$this->name $code", $this->sku, $this->type, $amount );
+		/** $var WC_Order_Item_PW_Gift_Card $order_item */
+		foreach ( $order->get_items( 'pw_gift_card' ) as $id => $order_item ) {
+			$amount    = $order_item->get_amount() * -1;
+			$coupons[] = $this->create_gift_card( "{$this->name} {$order_item->get_name()}", $this->sku, $this->type, $amount );
 		}
 
 		return $coupons;
