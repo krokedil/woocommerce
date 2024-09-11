@@ -22,7 +22,6 @@ class WCGiftCards extends AbstractGiftCardCompatibility {
 		// Check if the account gift card balance is used.
 		$use = isset( $post[ 'use_gift_card_balance' ] ) && 'on' === $post[ 'use_gift_card_balance' ] ? true : false;
 		if ( WC_GC()->account->use_balance() !== $use ) {
-
 			$account_giftcard_balance = WC_GC()->giftcards->cover_balance( WC()->cart->get_total() );
 			if($account_giftcard_balance) {
 				$coupons = array_merge($coupons, $this->create_gift_cards($account_giftcard_balance['giftcards']));
@@ -31,7 +30,7 @@ class WCGiftCards extends AbstractGiftCardCompatibility {
 
 		$applied_giftcards = WC_GC()->cart->get_applied_gift_cards()['giftcards'];
 		if($applied_giftcards) {
-    		$coupons = array_merge($coupons, $this->create_gift_cards($applied_giftcards));
+			$coupons = array_merge($coupons, $this->create_gift_cards($applied_giftcards));
 		}
 
 		return $coupons;
