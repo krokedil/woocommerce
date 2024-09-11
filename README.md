@@ -3,7 +3,7 @@ A library package for Krokedils plugins that contains helper methods when workin
 
 ### Requirements
 
-- PHP >=7.1
+- PHP >=7.4
 
 ### Installation
 

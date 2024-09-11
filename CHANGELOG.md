@@ -6,10 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+------------------
+## [1.7.0] - 2024-09-11
 ### Added
 * Added a abstract class for handling order metaboxes to simplify and standardize the process of adding metaboxes to the order edit screen after WooCommerce added HPOS.
 
-------------------
 ## [1.6.2] - 2024-08-28
 ### Fixed
 * Fixed a critical error when retrieving PW gift card from a Woo order.
