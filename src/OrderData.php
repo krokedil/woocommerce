@@ -180,7 +180,7 @@ abstract class OrderData extends Base {
 	abstract public function set_customer();
 
 	/**
-	 * Returns the total ex tax.
+	 * Returns the total incl. tax.
 	 *
 	 * @return int|float
 	 */
