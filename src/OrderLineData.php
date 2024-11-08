@@ -252,7 +252,7 @@ abstract class OrderLineData extends Base {
 	 * @return string
 	 */
 	public function get_sku() {
-		return $this->sku;
+		return strval( $this->sku );
 	}
 
 	/**
