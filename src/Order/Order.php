@@ -47,6 +47,7 @@ class Order extends OrderData {
 		$this->set_total_tax();
 		$this->set_subtotal();
 		$this->set_subtotal_tax();
+		$this->set_environment_info();
 
 		if ( $order instanceof \WC_Order ) {
 			$this->set_customer();
@@ -206,5 +207,18 @@ class Order extends OrderData {
 	public function set_subtotal_tax() {
 		// TODO - Subtotal tax
 		// $this->subtotal_tax = $this->format_price( $this->order->get_subtotal_tax() );
+	}
+
+	/**
+	 * Sets the environment information.
+	 *
+	 * @return void
+	 */
+	public function set_environment_info() {
+		$this->order->environment_info = array(
+			'php_version' => phpversion(),
+			'wc_version'  => WC()->version,
+			'wp_version'  => get_bloginfo( 'version' ),
+		);
 	}
 }
