@@ -106,7 +106,7 @@ class OrderLineItem extends OrderLine {
 	 * @return void
 	 */
 	public function set_type() {
-		$this->type = apply_filters( $this->get_filter_name( 'type' ), $this->product->get_type(), $this->order_line_item );
+		$this->type = $this->product ? apply_filters( $this->get_filter_name( 'type' ), $this->product->get_type(), $this->order_line_item ) : null;
 	}
 
 	/**
@@ -115,7 +115,7 @@ class OrderLineItem extends OrderLine {
 	 * @return void
 	 */
 	public function set_product_url() {
-		$this->product_url = apply_filters( $this->get_filter_name( 'product_url' ), $this->product->get_permalink(), $this->order_line_item );
+		$this->product_url = $this->product ? apply_filters( $this->get_filter_name( 'product_url' ), $this->product->get_permalink(), $this->order_line_item ) : null;
 	}
 
 	/**
