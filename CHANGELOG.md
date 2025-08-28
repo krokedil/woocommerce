@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+* Added Subscription class to handle subscription specific logic. Use the 'is_subscription_item' method to check if an cart item is a subscription. This method is compatible with the plugins "WooCommerce Subscriptions" and "WooCommerce All Products for Subscriptions" by WooCommerce.
+
 ------------------
 ## [1.8.1] - 2025-06-03
 ### Added
