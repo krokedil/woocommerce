@@ -7,11 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
-
-* Added Subscription class to handle subscription specific logic. Use the 'is_subscription_item' method to check if an cart item is a subscription. This method is compatible with the plugins "WooCommerce Subscriptions" and "WooCommerce All Products for Subscriptions" by WooCommerce.
-
 ------------------
+## [1.9.0] - 2025-08-29
+### Added
+* Added Subscription class to handle subscription specific logic. Use the 'is_subscription_item' method to check if an cart item is a subscription. This method is compatible with the plugins "WooCommerce Subscriptions" and "WooCommerce All Products for Subscriptions" by WooCommerce.
+ 
 ## [1.8.1] - 2025-06-03
 ### Added
 * Added documentation for `get_tax_rate` method to clarify that it always return the tax rate rate in minor units regardless of the the unit type set in the configuration (e.g., 12% → 1200).
