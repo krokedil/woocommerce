@@ -52,11 +52,11 @@ abstract class OrderMetabox implements MetaboxInterface {
 	 *
 	 * @param string $id Metabox id.
 	 * @param string $title Metabox title.
-	 * @param string $payment_method_id Payment method ID.
+	 * @param string $payment_method_id Payment method ID. Deprecated, use is_available when implementing the class instead.
 	 *
 	 * @return void
 	 */
-	public function __construct( $id, $title, $payment_method_id ) {
+	public function __construct( $id, $title, $payment_method_id = '' ) {
 		$this->id                = $id;
 		$this->title             = $title;
 		$this->payment_method_id = $payment_method_id;
@@ -90,6 +90,24 @@ abstract class OrderMetabox implements MetaboxInterface {
 	abstract public function metabox_content( $post );
 
 	/**
+	 * If the metabox should be available for this order or not.
+	 *
+	 * @param \WC_Order $order The order object.
+	 *
+	 * @return bool
+	 */
+	public function is_available( $order ) {
+		// If we have a payment method id set, check if the order has the same payment method.
+		if ( ! empty( $this->payment_method_id ) ) {
+			return $this->payment_method_id === $order->get_payment_method();
+		}
+
+		// Otherwise just return false to enforce implementations to override the method.
+		return false;
+	}
+
+
+	/**
 	 * Add metabox to order edit screen.
 	 *
 	 * @param string $post_type The post type for the current screen.
@@ -108,9 +126,8 @@ abstract class OrderMetabox implements MetaboxInterface {
 			return;
 		}
 
-		// Ensure the order has the correct payment method id.
-		$payment_method = $order->get_payment_method();
-		if ( ! empty( $this->payment_method_id ) && $this->payment_method_id !== $payment_method ) {
+		// Check if the metabox should be available for this order.
+		if ( $this->is_available( $order ) ) {
 			return;
 		}
 
