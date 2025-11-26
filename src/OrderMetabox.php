@@ -127,7 +127,7 @@ abstract class OrderMetabox implements MetaboxInterface {
 		}
 
 		// Check if the metabox should be available for this order.
-		if ( $this->is_available( $order ) ) {
+		if ( ! $this->is_available( $order ) ) {
 			return;
 		}
 
