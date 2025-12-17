@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+* Improved error handling in `CartCustomer` by checking the availability of the checkout object before accessing it, preventing potential errors when the checkout is unavailable.
+
 ------------------
 ## [1.9.0] - 2025-08-29
 ### Added
