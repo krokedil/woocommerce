@@ -245,7 +245,12 @@ abstract class OrderLineData extends Base {
 	 * @return float
 	 */
 	protected function safe_divide( $numerator, $denominator ) {
-		return 0 == $denominator ? 0 : $numerator / $denominator;
+
+		if ( is_numeric( $denominator ) && 0.0 === floatval( $denominator ) ) {
+			return 0.0;
+		}
+
+		return $numerator / $denominator;
 	}
 
 	/**
