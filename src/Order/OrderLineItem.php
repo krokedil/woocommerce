@@ -41,7 +41,7 @@ class OrderLineItem extends OrderLine {
 	 * @return void
 	 */
 	public function set_subtotal_unit_price() {
-		$this->subtotal_unit_price = apply_filters( $this->get_filter_name( 'subtotal_unit_price' ), $this->format_price( $this->order_line_item->get_subtotal() / $this->order_line_item->get_quantity() ), $this->order_line_item );
+		$this->subtotal_unit_price = apply_filters( $this->get_filter_name( 'subtotal_unit_price' ), $this->format_price( $this->safe_divide( $this->order_line_item->get_subtotal(), $this->order_line_item->get_quantity() ) ), $this->order_line_item );
 	}
 
 	/**
