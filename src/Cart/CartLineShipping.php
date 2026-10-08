@@ -110,7 +110,7 @@ class CartLineShipping extends OrderLineData {
 		$item_tax_rate = 0;
 
 		// Get the first key from the tax rates array.
-		$taxes = $this->shipping_rate->get_taxes;
+		$taxes = $this->shipping_rate->get_taxes();
 		if ( ! empty( $taxes ) ) {
 			$tax      = new \WC_Tax();
 			$tax_rate = 0;
