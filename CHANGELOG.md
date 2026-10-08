@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Fixed
+* Each shipping package in the cart now gets its own shipping line, priced from that package's chosen rate. Previously only the first package's rates were used, so a second package's shipping was dropped or priced from the wrong package.
+* The cart shipping line tax rate is read from the rate's own taxes. It was previously derived from the cart's total shipping tax, which is wrong when there is more than one shipping line.
 
 ------------------
 ## [1.9.2] - 2026-08-14

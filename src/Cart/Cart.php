@@ -86,8 +86,6 @@ class Cart extends OrderData {
 				return;
 			}
 
-			$shipping_ids = array_unique( $chosen_shipping_methods );
-
 			// Calculate shipping since WC Subscriptions will reset the shipping. See WC_Subscriptions_Cart::maybe_restore_shipping_methods().
 			WC()->shipping()->calculate_shipping( WC()->cart->get_shipping_packages() );
 
@@ -105,12 +103,9 @@ class Cart extends OrderData {
 				}
 			}
 
-			$shipping_rates = reset( $packages )['rates'] ?? array();
-			if ( empty( $shipping_rates ) ) {
-				return;
-			}
-
-			foreach ( $shipping_ids as $key => $shipping_id ) {
+			$first_package_rates = reset( $packages )['rates'] ?? array();
+			$added_shipping_ids  = array();
+			foreach ( $chosen_shipping_methods as $key => $shipping_id ) {
 				// Skip shipping lines for free trials.
 				if ( class_exists( 'WC_Subscriptions_Cart' ) && \WC_Subscriptions_Cart::cart_contains_subscription() ) {
 					$pattern = '/_after_a_\d+_\w+_trial/';
@@ -119,8 +114,14 @@ class Cart extends OrderData {
 					}
 				}
 
-				if ( $shipping_rates[ $shipping_id ] ?? false ) {
-					$shipping_rate         = $shipping_rates[ $shipping_id ];
+				if ( isset( $packages[ $key ] ) ) {
+					$shipping_rate = $packages[ $key ]['rates'][ $shipping_id ] ?? null;
+				} else {
+					$shipping_rate = in_array( $shipping_id, $added_shipping_ids, true ) ? null : ( $first_package_rates[ $shipping_id ] ?? null );
+				}
+
+				if ( $shipping_rate ) {
+					$added_shipping_ids[]  = $shipping_id;
 					$shipping_line         = new CartLineShipping( $shipping_rate, $this->config );
 					$this->line_shipping[] = apply_filters( $this->get_filter_name( 'line_shipping' ), $shipping_line, $this->cart );
 				}
