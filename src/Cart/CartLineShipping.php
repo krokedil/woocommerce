@@ -120,7 +120,7 @@ class CartLineShipping extends OrderLineData {
 				$tax_rate += $tax->get_rate_percent_value( $tax_id );
 			}
 			$item_tax_rate = round( $tax_rate * 100 );
-		} else {
+		} elseif ( $this->has_single_shipping_package() ) {
 			$item_tax_rate = 0.0 === floatval( $this->shipping_rate->get_cost() ) ? 0 : round( WC()->cart->get_shipping_tax() / $this->shipping_rate->get_cost() * 10000 );
 		}
 
@@ -169,7 +169,7 @@ class CartLineShipping extends OrderLineData {
 	 * @return void
 	 */
 	public function set_total_tax_amount() {
-		$shipping_tax           = ( 0.0 === $this->shipping_rate->get_shipping_tax() ) ? WC()->cart->get_shipping_tax() : $this->shipping_rate->get_shipping_tax();
+		$shipping_tax           = $this->get_shipping_tax();
 		$this->total_tax_amount = apply_filters( $this->get_filter_name( 'total_tax_amount' ), $this->format_price( $shipping_tax ), $this->shipping_rate );
 	}
 
@@ -179,8 +179,32 @@ class CartLineShipping extends OrderLineData {
 	 * @return void
 	 */
 	public function set_subtotal_tax_amount() {
-		$shipping_tax              = ( 0.0 === $this->shipping_rate->get_shipping_tax() ) ? WC()->cart->get_shipping_tax() : $this->shipping_rate->get_shipping_tax();
+		$shipping_tax              = $this->get_shipping_tax();
 		$this->subtotal_tax_amount = apply_filters( $this->get_filter_name( 'subtotal_tax_amount' ), $this->format_price( $shipping_tax ), $this->shipping_rate );
+	}
+
+	/**
+	 * Get the shipping tax for this rate.
+	 *
+	 * @return float
+	 */
+	private function get_shipping_tax() {
+		$shipping_tax = $this->shipping_rate->get_shipping_tax();
+
+		if ( 0.0 === $shipping_tax && $this->has_single_shipping_package() ) {
+			return WC()->cart->get_shipping_tax();
+		}
+
+		return $shipping_tax;
+	}
+
+	/**
+	 * Whether the cart ships in a single package.
+	 *
+	 * @return bool
+	 */
+	private function has_single_shipping_package() {
+		return count( WC()->shipping()->get_packages() ) <= 1;
 	}
 
 	/**

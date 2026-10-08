@@ -104,11 +104,7 @@ class Cart extends OrderData {
 			}
 
 			$first_package_rates = reset( $packages )['rates'] ?? array();
-			if ( empty( $first_package_rates ) ) {
-				return;
-			}
-
-			$added_shipping_ids = array();
+			$added_shipping_ids  = array();
 			foreach ( $chosen_shipping_methods as $key => $shipping_id ) {
 				// Skip shipping lines for free trials.
 				if ( class_exists( 'WC_Subscriptions_Cart' ) && \WC_Subscriptions_Cart::cart_contains_subscription() ) {
