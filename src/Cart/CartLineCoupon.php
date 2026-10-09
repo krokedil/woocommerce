@@ -8,7 +8,6 @@
 namespace Krokedil\WooCommerce\Cart;
 
 use Krokedil\WooCommerce\OrderLineData;
-use _PHPStan_503e82092\Nette\NotImplementedException;
 
 defined( 'ABSPATH' ) || exit;
 
