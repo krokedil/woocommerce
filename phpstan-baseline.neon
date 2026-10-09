@@ -1,0 +1,373 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Access to an undefined property WooCommerce\:\:\$shipping\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Cart/Cart.php
+
+		-
+			message: '#^PHPDoc type mixed of property Krokedil\\WooCommerce\\Cart\\Cart\:\:\$filter_prefix is not covariant with PHPDoc type string of overridden property Krokedil\\WooCommerce\\Base\:\:\$filter_prefix\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Cart/Cart.php
+
+		-
+			message: '#^Property WooCommerce\:\:\$session \(WC_Session\) in isset\(\) is not nullable\.$#'
+			identifier: isset.property
+			count: 1
+			path: src/Cart/Cart.php
+
+		-
+			message: '#^Access to an undefined property WooCommerce\:\:\$checkout\.$#'
+			identifier: property.notFound
+			count: 45
+			path: src/Cart/CartCustomer.php
+
+		-
+			message: '#^PHPDoc type mixed of property Krokedil\\WooCommerce\\Cart\\CartCustomer\:\:\$filter_prefix is not covariant with PHPDoc type string of overridden property Krokedil\\WooCommerce\\Base\:\:\$filter_prefix\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Cart/CartCustomer.php
+
+		-
+			message: '#^Access to an undefined property Krokedil\\WooCommerce\\Cart\\CartLineCoupon\:\:\$reference\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Cart/CartLineCoupon.php
+
+		-
+			message: '#^Access to offset ''amount'' on an unknown class Krokedil\\WooCommerce\\Cart\\WC_GC_Gift_Card_Data\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Cart/CartLineCoupon.php
+
+		-
+			message: '#^Access to offset ''giftcard'' on an unknown class Krokedil\\WooCommerce\\Cart\\WC_GC_Gift_Card_Data\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Cart/CartLineCoupon.php
+
+		-
+			message: '#^Binary operation "\*" between string and \-1 results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Cart/CartLineCoupon.php
+
+		-
+			message: '#^Method WC_Cart\:\:get_coupon_discount_tax_amount\(\) invoked with 2 parameters, 1 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: src/Cart/CartLineCoupon.php
+
+		-
+			message: '#^PHPDoc type mixed of property Krokedil\\WooCommerce\\Cart\\CartLineCoupon\:\:\$filter_prefix is not covariant with PHPDoc type string of overridden property Krokedil\\WooCommerce\\Base\:\:\$filter_prefix\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Cart/CartLineCoupon.php
+
+		-
+			message: '#^Parameter \$coupon of method Krokedil\\WooCommerce\\Cart\\CartLineCoupon\:\:set_coupon_data\(\) has invalid type Krokedil\\WooCommerce\\Cart\\WC_Coupon\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Cart/CartLineCoupon.php
+
+		-
+			message: '#^Parameter \$wc_gift_card_data of method Krokedil\\WooCommerce\\Cart\\CartLineCoupon\:\:set_wc_gc_data\(\) has invalid type Krokedil\\WooCommerce\\Cart\\WC_GC_Gift_Card_Data\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Cart/CartLineCoupon.php
+
+		-
+			message: '#^Property Krokedil\\WooCommerce\\Cart\\CartLineCoupon\:\:\$coupon \(WC_Coupon\) does not accept Krokedil\\WooCommerce\\Cart\\WC_Coupon\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Cart/CartLineCoupon.php
+
+		-
+			message: '#^PHPDoc type mixed of property Krokedil\\WooCommerce\\Cart\\CartLineFee\:\:\$filter_prefix is not covariant with PHPDoc type string of overridden property Krokedil\\WooCommerce\\Base\:\:\$filter_prefix\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Cart/CartLineFee.php
+
+		-
+			message: '#^Ternary operator condition is always false\.$#'
+			identifier: ternary.alwaysFalse
+			count: 2
+			path: src/Cart/CartLineFee.php
+
+		-
+			message: '#^PHPDoc type mixed of property Krokedil\\WooCommerce\\Cart\\CartLineItem\:\:\$filter_prefix is not covariant with PHPDoc type string of overridden property Krokedil\\WooCommerce\\Base\:\:\$filter_prefix\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Cart/CartLineItem.php
+
+		-
+			message: '#^Parameter \#1 \$attachment_id of function wp_get_attachment_image_url expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Cart/CartLineItem.php
+
+		-
+			message: '#^Access to an undefined property WC_Shipping_Rate\:\:\$get_taxes\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Cart/CartLineShipping.php
+
+		-
+			message: '#^Binary operation "/" between float and string results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Cart/CartLineShipping.php
+
+		-
+			message: '#^PHPDoc type mixed of property Krokedil\\WooCommerce\\Cart\\CartLineShipping\:\:\$filter_prefix is not covariant with PHPDoc type string of overridden property Krokedil\\WooCommerce\\Base\:\:\$filter_prefix\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Cart/CartLineShipping.php
+
+		-
+			message: '#^Call to an undefined method WC_Order_Item\:\:get_amount\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Compatibility/Giftcards/PWGiftCards.php
+
+		-
+			message: '#^Binary operation "\+" between string and string results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Compatibility/Giftcards/SmartCoupons.php
+
+		-
+			message: '#^PHPDoc type mixed of property Krokedil\\WooCommerce\\Order\\Order\:\:\$filter_prefix is not covariant with PHPDoc type string of overridden property Krokedil\\WooCommerce\\Base\:\:\$filter_prefix\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Order/Order.php
+
+		-
+			message: '#^Parameter \#1 \$coupon of method Krokedil\\WooCommerce\\Order\\OrderLineCoupon\:\:set_coupon_data\(\) expects WC_Order_Item_Coupon, WC_Order_Item given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Order/Order.php
+
+		-
+			message: '#^Parameter \#1 \$coupon of method Krokedil\\WooCommerce\\Order\\OrderLineCoupon\:\:set_smart_coupon_data\(\) expects WC_Order_Item_Coupon, WC_Order_Item given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Order/Order.php
+
+		-
+			message: '#^Parameter \#1 \$order_line_item of class Krokedil\\WooCommerce\\Order\\OrderLineFee constructor expects WC_Order_Item_Fee, WC_Order_Item given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Order/Order.php
+
+		-
+			message: '#^Parameter \#1 \$order_line_item of class Krokedil\\WooCommerce\\Order\\OrderLineItem constructor expects WC_Order_Item_Product, WC_Order_Item given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Order/Order.php
+
+		-
+			message: '#^Parameter \#1 \$order_line_item of class Krokedil\\WooCommerce\\Order\\OrderLineShipping constructor expects WC_Order_Item_Shipping, WC_Order_Item given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Order/Order.php
+
+		-
+			message: '#^Parameter \#1 \$wc_gift_card of method Krokedil\\WooCommerce\\Order\\OrderLineCoupon\:\:set_wc_gc_data\(\) expects WC_GC_Order_Item_Gift_Card, WC_Order_Item given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Order/Order.php
+
+		-
+			message: '#^Property WooCommerce\:\:\$session \(WC_Session\) in isset\(\) is not nullable\.$#'
+			identifier: isset.property
+			count: 1
+			path: src/Order/Order.php
+
+		-
+			message: '#^PHPDoc type mixed of property Krokedil\\WooCommerce\\Order\\OrderCustomer\:\:\$filter_prefix is not covariant with PHPDoc type string of overridden property Krokedil\\WooCommerce\\Base\:\:\$filter_prefix\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Order/OrderCustomer.php
+
+		-
+			message: '#^Call to an undefined method WC_Order_Item\:\:get_taxes\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Order/OrderLine.php
+
+		-
+			message: '#^Call to an undefined method WC_Order_Item\:\:get_total\(\)\.$#'
+			identifier: method.notFound
+			count: 5
+			path: src/Order/OrderLine.php
+
+		-
+			message: '#^Call to an undefined method WC_Order_Item\:\:get_total_tax\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/Order/OrderLine.php
+
+		-
+			message: '#^Binary operation "\*" between string and \-1 results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 2
+			path: src/Order/OrderLineCoupon.php
+
+		-
+			message: '#^PHPDoc type mixed of property Krokedil\\WooCommerce\\Order\\OrderLineFee\:\:\$filter_prefix is not covariant with PHPDoc type string of overridden property Krokedil\\WooCommerce\\Base\:\:\$filter_prefix\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Order/OrderLineFee.php
+
+		-
+			message: '#^Call to an undefined method WC_Order_Item\:\:get_product\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Order/OrderLineItem.php
+
+		-
+			message: '#^Call to an undefined method WC_Order_Item\:\:get_subtotal\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: src/Order/OrderLineItem.php
+
+		-
+			message: '#^Call to an undefined method WC_Order_Item\:\:get_subtotal_tax\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/Order/OrderLineItem.php
+
+		-
+			message: '#^Call to an undefined method WC_Order_Item\:\:get_total\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Order/OrderLineItem.php
+
+		-
+			message: '#^Call to an undefined method WC_Order_Item\:\:get_total_tax\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Order/OrderLineItem.php
+
+		-
+			message: '#^PHPDoc type mixed of property Krokedil\\WooCommerce\\Order\\OrderLineItem\:\:\$filter_prefix is not covariant with PHPDoc type string of overridden property Krokedil\\WooCommerce\\Base\:\:\$filter_prefix\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Order/OrderLineItem.php
+
+		-
+			message: '#^Parameter \#1 \$attachment_id of function wp_get_attachment_image_url expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Order/OrderLineItem.php
+
+		-
+			message: '#^Call to an undefined method WC_Order_Item\:\:get_instance_id\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Order/OrderLineShipping.php
+
+		-
+			message: '#^Call to an undefined method WC_Order_Item\:\:get_method_id\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Order/OrderLineShipping.php
+
+		-
+			message: '#^PHPDoc type mixed of property Krokedil\\WooCommerce\\Order\\OrderLineShipping\:\:\$filter_prefix is not covariant with PHPDoc type string of overridden property Krokedil\\WooCommerce\\Base\:\:\$filter_prefix\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/Order/OrderLineShipping.php
+
+		-
+			message: '#^Method Krokedil\\WooCommerce\\OrderMetabox\:\:get_id\(\) should return int\|null but returns false\.$#'
+			identifier: return.type
+			count: 1
+			path: src/OrderMetabox.php
+
+		-
+			message: '#^Call to method save\(\) on an unknown class Krokedil\\WooCommerce\\WC_Order\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/OrderUtility.php
+
+		-
+			message: '#^Call to method update_meta_data\(\) on an unknown class Krokedil\\WooCommerce\\WC_Order\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/OrderUtility.php
+
+		-
+			message: '#^Method Krokedil\\WooCommerce\\OrderUtility\:\:add_environment_info\(\) has invalid return type Krokedil\\WooCommerce\\WC_Order\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/OrderUtility.php
+
+		-
+			message: '#^Parameter \$order of method Krokedil\\WooCommerce\\OrderUtility\:\:add_environment_info\(\) has invalid type Krokedil\\WooCommerce\\WC_Order\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/OrderUtility.php
+
+		-
+			message: '#^PHPDoc type mixed of property Krokedil\\WooCommerce\\StoreApi\\StoreApi\:\:\$filter_prefix is not covariant with PHPDoc type string of overridden property Krokedil\\WooCommerce\\Base\:\:\$filter_prefix\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/StoreApi/StoreApi.php
+
+		-
+			message: '#^Access to an undefined property WooCommerce\:\:\$checkout\.$#'
+			identifier: property.notFound
+			count: 22
+			path: src/StoreApi/StoreApiCustomer.php
+
+		-
+			message: '#^PHPDoc type mixed of property Krokedil\\WooCommerce\\StoreApi\\StoreApiCustomer\:\:\$filter_prefix is not covariant with PHPDoc type string of overridden property Krokedil\\WooCommerce\\Base\:\:\$filter_prefix\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/StoreApi/StoreApiCustomer.php
+
+		-
+			message: '#^PHPDoc type mixed of property Krokedil\\WooCommerce\\StoreApi\\StoreApiLineCoupon\:\:\$filter_prefix is not covariant with PHPDoc type string of overridden property Krokedil\\WooCommerce\\Base\:\:\$filter_prefix\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/StoreApi/StoreApiLineCoupon.php
+
+		-
+			message: '#^PHPDoc type mixed of property Krokedil\\WooCommerce\\StoreApi\\StoreApiLineFee\:\:\$filter_prefix is not covariant with PHPDoc type string of overridden property Krokedil\\WooCommerce\\Base\:\:\$filter_prefix\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/StoreApi/StoreApiLineFee.php
+
+		-
+			message: '#^Ternary operator condition is always false\.$#'
+			identifier: ternary.alwaysFalse
+			count: 2
+			path: src/StoreApi/StoreApiLineFee.php
+
+		-
+			message: '#^PHPDoc type mixed of property Krokedil\\WooCommerce\\StoreApi\\StoreApiLineItem\:\:\$filter_prefix is not covariant with PHPDoc type string of overridden property Krokedil\\WooCommerce\\Base\:\:\$filter_prefix\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/StoreApi/StoreApiLineItem.php
+
+		-
+			message: '#^Parameter \#1 \$attachment_id of function wp_get_attachment_image_url expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/StoreApi/StoreApiLineItem.php
+
+		-
+			message: '#^PHPDoc type mixed of property Krokedil\\WooCommerce\\StoreApi\\StoreApiLineShipping\:\:\$filter_prefix is not covariant with PHPDoc type string of overridden property Krokedil\\WooCommerce\\Base\:\:\$filter_prefix\.$#'
+			identifier: property.phpDocType
+			count: 1
+			path: src/StoreApi/StoreApiLineShipping.php
+
+		-
+			message: '#^Call to function method_exists\(\) with ''WCS_ATT_Cart'' and ''get_subscription…'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: src/Subscription.php
