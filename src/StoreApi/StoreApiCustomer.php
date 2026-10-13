@@ -37,7 +37,7 @@ class StoreApiCustomer extends CustomerData {
 	/**
 	 * Filter prefix.
 	 *
-	 * @var mixed
+	 * @var string
 	 */
 	public $filter_prefix = 'store_api_cart_customer';
 
