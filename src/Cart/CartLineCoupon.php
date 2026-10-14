@@ -8,7 +8,6 @@
 namespace Krokedil\WooCommerce\Cart;
 
 use Krokedil\WooCommerce\OrderLineData;
-use _PHPStan_503e82092\Nette\NotImplementedException;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -41,15 +40,15 @@ class CartLineCoupon extends OrderLineData {
 	/**
 	 * Filter prefix.
 	 *
-	 * @var mixed
+	 * @var string
 	 */
 	public $filter_prefix = 'cart_line_coupon';
 
 	/**
 	 * Set the data for a normal WooCommerce coupon.
 	 *
-	 * @param string    $coupon_key Coupon key.
-	 * @param WC_Coupon $coupon Coupon data.
+	 * @param string     $coupon_key Coupon key.
+	 * @param \WC_Coupon $coupon Coupon data.
 	 *
 	 * @return void
 	 */
@@ -102,7 +101,7 @@ class CartLineCoupon extends OrderLineData {
 	/**
 	 * Set the data from WC_Gift_Card plugin.
 	 *
-	 * @param WC_GC_Gift_Card_Data $wc_gift_card_data WC Giftcard data.
+	 * @param array $wc_gift_card_data WC Giftcard data.
 	 *
 	 * @return void
 	 */

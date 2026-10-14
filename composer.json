@@ -6,8 +6,10 @@
     "require-dev": {
         "php": "~7.4 || ~8.0",
         "php-stubs/wordpress-stubs": "^6.1",
-        "php-stubs/woocommerce-stubs": "^7.2",
-        "10up/wp_mock": "^1.0"
+        "php-stubs/woocommerce-stubs": "^10.2",
+        "10up/wp_mock": "^1.0",
+        "phpstan/phpstan": "^2.1",
+        "php-stubs/woocommerce-subscriptions-stubs": "^9.1"
     },
     "license": "GPL-V2",
     "autoload": {
@@ -24,6 +26,14 @@
         "platform": {
             "php": "7.4"
         }
+    },
+    "scripts": {
+        "phpstan": "./vendor/bin/phpstan analyse --memory-limit=2G",
+        "phpstan:baseline": "./vendor/bin/phpstan analyse --memory-limit=2G --generate-baseline"
+    },
+    "scripts-descriptions": {
+        "phpstan": "Run PHPStan static analysis at the level set in phpstan.neon. Findings that predate the analysis are suppressed by phpstan-baseline.neon, so a failure means new code introduced it.",
+        "phpstan:baseline": "Regenerate phpstan-baseline.neon from the current findings. Only run this when intentionally accepting new suppressions, otherwise fix the reported errors instead."
     },
     "authors": [
         {
