@@ -40,7 +40,7 @@ class StoreApiLineCoupon extends OrderLineData {
 	/**
 	 * Filter prefix.
 	 *
-	 * @var mixed
+	 * @var string
 	 */
 	public $filter_prefix = 'store_api_cart_line_coupon';
 

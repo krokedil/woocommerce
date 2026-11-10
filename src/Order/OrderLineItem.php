@@ -12,7 +12,7 @@ class OrderLineItem extends OrderLine {
 	/**
 	 * Filter prefix.
 	 *
-	 * @var mixed
+	 * @var string
 	 */
 	public $filter_prefix = 'order_line_item';
 
