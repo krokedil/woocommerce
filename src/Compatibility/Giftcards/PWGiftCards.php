@@ -37,11 +37,13 @@ class PWGiftCards extends AbstractGiftCardCompatibility {
 	 * @return float|null The balance, or null when it can not be read.
 	 */
 	private function get_balance( $code ) {
-		if ( ! class_exists( 'PW_Gift_Card' ) ) {
+		// Kept in a variable so a consuming plugin's PHP-Scoper does not prefix the class name.
+		$class_name = 'PW_Gift_Card';
+		if ( ! class_exists( $class_name ) ) {
 			return null;
 		}
 
-		$gift_card = new \PW_Gift_Card( $code );
+		$gift_card = new $class_name( $code );
 		if ( ! $gift_card->get_id() ) {
 			return null;
 		}

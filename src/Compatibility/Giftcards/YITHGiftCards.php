@@ -39,11 +39,13 @@ class YITHGiftCards extends AbstractGiftCardCompatibility {
 	 * @return float|null The balance, or null when it can not be read.
 	 */
 	private function get_balance( $code ) {
-		if ( ! function_exists( 'YITH_YWGC' ) ) {
+		// Kept in a variable so a consuming plugin's PHP-Scoper does not prefix the function name.
+		$yith = 'YITH_YWGC';
+		if ( ! function_exists( $yith ) ) {
 			return null;
 		}
 
-		$gift_card = YITH_YWGC()->get_gift_card_by_code( $code );
+		$gift_card = $yith()->get_gift_card_by_code( $code );
 		if ( ! is_object( $gift_card ) ) {
 			return null;
 		}
