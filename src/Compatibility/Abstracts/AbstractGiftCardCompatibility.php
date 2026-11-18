@@ -4,7 +4,6 @@ namespace Krokedil\WooCommerce\Compatibility\Abstracts;
 use Krokedil\WooCommerce\Interfaces\GiftCardCompatibilityInterface;
 use Krokedil\WooCommerce\KrokedilWooCommerce;
 use Krokedil\WooCommerce\Order\OrderLineCoupon;
-use Krokedil\WooCommerce\OrderLineData;
 
 /**
  * Abstract class to handle compatibility with gift card plugins.
@@ -54,10 +53,12 @@ abstract class AbstractGiftCardCompatibility implements GiftCardCompatibilityInt
 	 * @param string           $sku The SKU of the gift card.
 	 * @param string           $type The type of the gift card.
 	 * @param float|int|string $amount The amount of the gift card.
+	 * @param string|null      $code The gift card code.
+	 * @param float|int|null   $balance The balance available on the gift card before it is applied, or null when it is unknown.
 	 *
-	 * @return OrderLineData
+	 * @return OrderLineCoupon
 	 */
-	protected function create_gift_card( $name, $sku, $type, $amount ) {
+	protected function create_gift_card( $name, $sku, $type, $amount, $code = null, $balance = null ) {
 		$gift_card = new OrderLineCoupon( $this->package->config() );
 		$gift_card->set_name( $name )
 				->set_sku( $sku )
@@ -67,7 +68,9 @@ abstract class AbstractGiftCardCompatibility implements GiftCardCompatibilityInt
 				->set_total_amount( $amount )
 				->set_total_tax_amount( 0 )
 				->set_tax_rate( 0 )
-				->set_type( $type );
+				->set_type( $type )
+				->set_gift_card_code( $code )
+				->set_gift_card_balance( $balance );
 
 		return $gift_card;
 	}

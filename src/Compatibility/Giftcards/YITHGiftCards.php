@@ -2,7 +2,7 @@
 namespace Krokedil\WooCommerce\Compatibility\Giftcards;
 
 use Krokedil\WooCommerce\Compatibility\Abstracts\AbstractGiftCardCompatibility;
-use Krokedil\WooCommerce\OrderLineData;
+use Krokedil\WooCommerce\Order\OrderLineCoupon;
 
 /**
  * Class to handle compatibility with YITH Gift Cards.
@@ -11,7 +11,7 @@ class YITHGiftCards extends AbstractGiftCardCompatibility {
 	/**
 	 * Get the giftcards applied to the current cart.
 	 *
-	 * @return OrderLineData[]
+	 * @return OrderLineCoupon[]
 	 */
 	public function get_cart_giftcards() {
 		$coupons = array();
@@ -25,10 +25,30 @@ class YITHGiftCards extends AbstractGiftCardCompatibility {
 			$amount = ( isset( WC()->cart->applied_gift_cards_amounts[ $code ] ) ?
 				WC()->cart->applied_gift_cards_amounts[ $code ] : 0 ) * -1;
 
-			$coupons[] = $this->create_gift_card( "$this->name $code", $this->sku, $this->type, $amount );
+			$coupons[] = $this->create_gift_card( "$this->name $code", $this->sku, $this->type, $amount, $code, $this->get_balance( $code ) );
 		}
 
 		return $coupons;
+	}
+
+	/**
+	 * Get the balance available on a gift card, the same way YITH reads it when applying it to the cart.
+	 *
+	 * @param string $code The gift card code.
+	 *
+	 * @return float|null The balance, or null when it can not be read.
+	 */
+	private function get_balance( $code ) {
+		if ( ! function_exists( 'YITH_YWGC' ) ) {
+			return null;
+		}
+
+		$gift_card = YITH_YWGC()->get_gift_card_by_code( $code );
+		if ( ! is_object( $gift_card ) ) {
+			return null;
+		}
+
+		return floatval( apply_filters( 'yith_ywgc_gift_card_coupon_amount', $gift_card->get_balance(), $gift_card ) );
 	}
 
 	/**
@@ -39,7 +59,7 @@ class YITHGiftCards extends AbstractGiftCardCompatibility {
 	 *
 	 * @param \WC_Order $order The WooCommerce order.
 	 *
-	 * @return OrderLineData[]
+	 * @return OrderLineCoupon[]
 	 */
 	public function get_order_giftcards( $order ) {
 		$coupons   = array();

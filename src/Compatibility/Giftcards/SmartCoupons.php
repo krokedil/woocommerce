@@ -3,7 +3,7 @@ namespace Krokedil\WooCommerce\Compatibility\Giftcards;
 
 use Krokedil\WooCommerce\Compatibility\Abstracts\AbstractGiftCardCompatibility;
 use Krokedil\WooCommerce\KrokedilWooCommerce;
-use Krokedil\WooCommerce\OrderLineData;
+use Krokedil\WooCommerce\Order\OrderLineCoupon;
 
 /**
  * Class to handle compatibility with Smart Coupons.
@@ -24,7 +24,7 @@ class SmartCoupons extends AbstractGiftCardCompatibility {
 	/**
 	 * Get the giftcards applied to the current cart.
 	 *
-	 * @return OrderLineData[]
+	 * @return OrderLineCoupon[]
 	 */
 	public function get_cart_giftcards() {
 		$coupons = array();
@@ -37,13 +37,15 @@ class SmartCoupons extends AbstractGiftCardCompatibility {
 			$apply_before_tax = 'yes' === get_option( 'woocommerce_smart_coupon_apply_before_tax', 'no' );
 			if ( wc_tax_enabled() && $apply_before_tax ) {
 				// The discount is applied directly to the cart item. Send gift card amount as zero for bookkeeping.
-				$amount = 0;
+				$amount  = 0;
+				$balance = null;
 			} else {
-				$amount = -1 * ( WC()->cart->get_coupon_discount_amount( $code ) + WC()->cart->get_coupon_discount_tax_amount( $code ) );
+				$amount  = -1 * ( WC()->cart->get_coupon_discount_amount( $code ) + WC()->cart->get_coupon_discount_tax_amount( $code ) );
+				$balance = $cart_coupon->get_amount();
 			}
 			$sku = substr( strval( $code ), 0, 64 );
 
-			$coupons[] = $this->create_gift_card( "$this->name $code", $sku, $this->type, $amount );
+			$coupons[] = $this->create_gift_card( "$this->name $code", $sku, $this->type, $amount, $code, $balance );
 		}
 
 		return $coupons;
@@ -54,7 +56,7 @@ class SmartCoupons extends AbstractGiftCardCompatibility {
 	 *
 	 * @param \WC_Order $order The WooCommerce order.
 	 *
-	 * @return OrderLineData[]
+	 * @return OrderLineCoupon[]
 	 */
 	public function get_order_giftcards( $order ) {
 		$coupons = array();

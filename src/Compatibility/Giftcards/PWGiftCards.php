@@ -2,7 +2,7 @@
 namespace Krokedil\WooCommerce\Compatibility\Giftcards;
 
 use Krokedil\WooCommerce\Compatibility\Abstracts\AbstractGiftCardCompatibility;
-use Krokedil\WooCommerce\OrderLineData;
+use Krokedil\WooCommerce\Order\OrderLineCoupon;
 
 /**
  * Class to handle compatibility with PW Gift Cards.
@@ -11,7 +11,7 @@ class PWGiftCards extends AbstractGiftCardCompatibility {
 	/**
 	 * Get the giftcards applied to the current cart.
 	 *
-	 * @return OrderLineData[]
+	 * @return OrderLineCoupon[]
 	 */
 	public function get_cart_giftcards() {
 		$coupons           = array();
@@ -23,10 +23,35 @@ class PWGiftCards extends AbstractGiftCardCompatibility {
 
 		foreach ( $pw_gift_card_data['gift_cards'] as $code => $value ) {
 			$amount    = $value * -1;
-			$coupons[] = $this->create_gift_card( "$this->name $code", $this->sku, $this->type, $amount );
+			$coupons[] = $this->create_gift_card( "$this->name $code", $this->sku, $this->type, $amount, $code, $this->get_balance( $code ) );
 		}
 
 		return $coupons;
+	}
+
+	/**
+	 * Get the balance available on a gift card, in the current currency.
+	 *
+	 * @param string $code The gift card number.
+	 *
+	 * @return float|null The balance, or null when it can not be read.
+	 */
+	private function get_balance( $code ) {
+		if ( ! class_exists( 'PW_Gift_Card' ) ) {
+			return null;
+		}
+
+		$gift_card = new \PW_Gift_Card( $code );
+		if ( ! $gift_card->get_id() ) {
+			return null;
+		}
+
+		// PW Gift Cards applies nothing from an expired gift card.
+		if ( $gift_card->has_expired() ) {
+			return 0.0;
+		}
+
+		return floatval( apply_filters( 'pwgc_to_current_currency', $gift_card->get_balance() ) );
 	}
 
 	/**
@@ -34,7 +59,7 @@ class PWGiftCards extends AbstractGiftCardCompatibility {
 	 *
 	 * @param \WC_Order $order The WooCommerce order.
 	 *
-	 * @return OrderLineData[]
+	 * @return OrderLineCoupon[]
 	 */
 	public function get_order_giftcards( $order ) {
 		$coupons = array();
