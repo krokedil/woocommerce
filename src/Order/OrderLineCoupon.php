@@ -45,7 +45,9 @@ class OrderLineCoupon extends OrderLineData {
 	public $gift_card_code;
 
 	/**
-	 * The balance available on the gift card before it is applied to the cart, or null when it is unknown.
+	 * What the gift card can pay toward the order total, before it is applied to the cart.
+	 *
+	 * Null when it is unknown, or when the plugin applies the credit as a discount on the items instead of as a payment.
 	 *
 	 * @var float|int|null
 	 */
@@ -201,9 +203,9 @@ class OrderLineCoupon extends OrderLineData {
 	}
 
 	/**
-	 * Set the balance available on the gift card before it is applied to the cart.
+	 * Set what the gift card can pay toward the order total, before it is applied to the cart.
 	 *
-	 * @param float|int|string|null $balance The balance in major units, or null when it is unknown.
+	 * @param float|int|string|null $balance The balance in major units, or null when it is unknown or the credit is not a payment.
 	 *
 	 * @return self
 	 */
@@ -214,9 +216,12 @@ class OrderLineCoupon extends OrderLineData {
 	}
 
 	/**
-	 * Get the balance available on the gift card before it is applied to the cart.
+	 * Get what the gift card can pay toward the order total, before it is applied to the cart.
 	 *
-	 * @return float|int|null The balance in the configured price format, or null when it is unknown.
+	 * Null means the line must not be treated as a payment with a balance: either the balance is unknown, or the
+	 * plugin applies the credit as a discount on the items, as Smart Coupons does when it deducts before tax.
+	 *
+	 * @return float|int|null The balance in the configured price format, or null.
 	 */
 	public function get_gift_card_balance() {
 		return $this->gift_card_balance;

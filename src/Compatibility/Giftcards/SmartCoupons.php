@@ -37,7 +37,8 @@ class SmartCoupons extends AbstractGiftCardCompatibility {
 			$apply_before_tax = 'yes' === get_option( 'woocommerce_smart_coupon_apply_before_tax', 'no' );
 			if ( wc_tax_enabled() && $apply_before_tax ) {
 				// The discount is applied directly to the cart item. Send gift card amount as zero for bookkeeping.
-				$amount  = 0;
+				$amount = 0;
+				// The credit is a discount on the items here, not a payment toward the total, so it has no balance to pay with.
 				$balance = null;
 			} else {
 				$amount  = -1 * ( WC()->cart->get_coupon_discount_amount( $code ) + WC()->cart->get_coupon_discount_tax_amount( $code ) );

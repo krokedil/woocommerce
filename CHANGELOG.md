@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-* Gift card lines from the cart now carry the gift card code and the balance available on the gift card, through `get_gift_card_code()` and `get_gift_card_balance()`, for WooCommerce Gift Cards, PW Gift Cards, YITH Gift Cards and Smart Coupons store credit.
+* Gift card lines from the cart now carry the gift card code and the balance available on the gift card, through `get_gift_card_code()` and `get_gift_card_balance()`, for WooCommerce Gift Cards, PW Gift Cards, YITH Gift Cards and Smart Coupons store credit. The balance is what the card can pay toward the order total, so it is empty when Smart Coupons deducts the credit before tax, as a discount on the items.
 
 ------------------
 

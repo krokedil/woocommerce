@@ -54,7 +54,7 @@ abstract class AbstractGiftCardCompatibility implements GiftCardCompatibilityInt
 	 * @param string           $type The type of the gift card.
 	 * @param float|int|string $amount The amount of the gift card.
 	 * @param string|null      $code The gift card code.
-	 * @param float|int|null   $balance The balance available on the gift card before it is applied, or null when it is unknown.
+	 * @param float|int|null   $balance What the gift card can pay toward the order total before it is applied, or null when it is unknown or the credit is not a payment.
 	 *
 	 * @return OrderLineCoupon
 	 */
