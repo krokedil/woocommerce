@@ -2,7 +2,7 @@
 namespace Krokedil\WooCommerce\Compatibility\Giftcards;
 
 use Krokedil\WooCommerce\Compatibility\Abstracts\AbstractGiftCardCompatibility;
-use Krokedil\WooCommerce\OrderLineData;
+use Krokedil\WooCommerce\Order\OrderLineCoupon;
 
 /**
  * Class to handle compatibility with WooCommerce Gift Cards.
@@ -14,7 +14,7 @@ class WCGiftCards extends AbstractGiftCardCompatibility {
 	/**
 	 * Get the giftcards applied to the current cart.
 	 *
-	 * @return OrderLineData[]
+	 * @return OrderLineCoupon[]
 	 */
 	public function get_cart_giftcards() {
 		$coupons = array();
@@ -23,7 +23,9 @@ class WCGiftCards extends AbstractGiftCardCompatibility {
 			$code   = $wc_giftcard['giftcard']->get_data()['code'];
 			$amount = $wc_giftcard['amount'] * -1;
 
-			$coupons[] = $this->create_gift_card( "$this->name $code", $this->sku, $this->type, $amount );
+			$balance = is_callable( array( $wc_giftcard['giftcard'], 'get_balance' ) ) ? $wc_giftcard['giftcard']->get_balance() : null;
+
+			$coupons[] = $this->create_gift_card( "$this->name $code", $this->sku, $this->type, $amount, $code, $balance );
 		}
 
 		return $coupons;
@@ -34,7 +36,7 @@ class WCGiftCards extends AbstractGiftCardCompatibility {
 	 *
 	 * @param \WC_Order $order The WooCommerce order.
 	 *
-	 * @return OrderLineData[]
+	 * @return OrderLineCoupon[]
 	 */
 	public function get_order_giftcards( $order ) {
 		$coupons = array();

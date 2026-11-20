@@ -106,12 +106,15 @@ class WCGiftCardsTest extends TestCase {
 	 */
 	private function get_mock_cart_giftcard( $code ) {
 		$mock_coupon = $this->getMockBuilder( 'stdClass' )
-			->setMethods( array( 'get_data' ) )
+			->setMethods( array( 'get_data', 'get_balance' ) )
 			->getMock();
 
 		$mock_coupon->expects( $this->once() )
 			->method( 'get_data' )
 			->willReturn( array( 'code' => $code ) );
+
+		$mock_coupon->method( 'get_balance' )
+			->willReturn( 500 );
 
 		return $mock_coupon;
 	}
@@ -195,6 +198,8 @@ class WCGiftCardsTest extends TestCase {
 		$this->assertEquals( 0, $actual[0]->get_total_tax_amount() );
 		$this->assertEquals( 0, $actual[0]->get_tax_rate() );
 		$this->assertEquals( 'gift_card', $actual[0]->get_type() );
+		$this->assertEquals( 'coupon1', $actual[0]->get_gift_card_code() );
+		$this->assertEquals( 50000, $actual[0]->get_gift_card_balance() );
 
 		$this->assertEquals( 'Gift card coupon2', $actual[1]->get_name() );
 		$this->assertEquals( 'gift_card', $actual[1]->get_sku() );
