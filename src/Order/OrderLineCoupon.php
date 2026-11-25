@@ -38,6 +38,22 @@ class OrderLineCoupon extends OrderLineData {
 	public $discount_tax_amount;
 
 	/**
+	 * The gift card code, when the line is a gift card or store credit.
+	 *
+	 * @var string|null
+	 */
+	public $gift_card_code;
+
+	/**
+	 * What the gift card can pay toward the order total, before it is applied to the cart.
+	 *
+	 * Null when it is unknown, or when the plugin applies the credit as a discount on the items instead of as a payment.
+	 *
+	 * @var float|int|null
+	 */
+	public $gift_card_balance;
+
+	/**
 	 * Sets the data for the order line coupon.
 	 *
 	 * @param \WC_Order_Item_Coupon $coupon The WooCommerce coupon.
@@ -162,6 +178,53 @@ class OrderLineCoupon extends OrderLineData {
 		$this->total_tax_amount    = $this->format_price( $coupon_tax_amount );
 		$this->tax_rate            = 0;
 		$this->type                = 'gift_card';
+	}
+
+	/**
+	 * Set the gift card code.
+	 *
+	 * @param string|null $code The gift card code.
+	 *
+	 * @return self
+	 */
+	public function set_gift_card_code( $code = null ) {
+		$this->gift_card_code = null === $code ? null : strval( $code );
+
+		return $this;
+	}
+
+	/**
+	 * Get the gift card code.
+	 *
+	 * @return string|null
+	 */
+	public function get_gift_card_code() {
+		return $this->gift_card_code;
+	}
+
+	/**
+	 * Set what the gift card can pay toward the order total, before it is applied to the cart.
+	 *
+	 * @param float|int|string|null $balance The balance in major units, or null when it is unknown or the credit is not a payment.
+	 *
+	 * @return self
+	 */
+	public function set_gift_card_balance( $balance = null ) {
+		$this->gift_card_balance = is_numeric( $balance ) ? $this->format_price( $balance ) : null;
+
+		return $this;
+	}
+
+	/**
+	 * Get what the gift card can pay toward the order total, before it is applied to the cart.
+	 *
+	 * Null means the line must not be treated as a payment with a balance: either the balance is unknown, or the
+	 * plugin applies the credit as a discount on the items, as Smart Coupons does when it deducts before tax.
+	 *
+	 * @return float|int|null The balance in the configured price format, or null.
+	 */
+	public function get_gift_card_balance() {
+		return $this->gift_card_balance;
 	}
 
 	/**
